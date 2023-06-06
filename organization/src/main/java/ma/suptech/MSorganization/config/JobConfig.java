@@ -1,3 +1,4 @@
+/*
 package ma.suptech.MSorganization.config;
 
 import ma.suptech.MSorganization.entities.Job;
@@ -7,7 +8,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-@Configuration
+
 public class JobConfig {
     private final JobRepository jobRepository;
 
@@ -15,7 +16,6 @@ public class JobConfig {
         this.jobRepository = jobRepository;
     }
 
-    @Bean
     CommandLineRunner initDepartment(){
         return args -> {
             jobRepository.save(new Job(null,"développeur fullStack","développeur adroit dans plusieurs technologies","Java Php,BDD", Responsibility.MEDIUM));
@@ -27,3 +27,4 @@ public class JobConfig {
         };
     }
 }
+*/
