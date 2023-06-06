@@ -1,17 +1,20 @@
 package ma.suptech.MSorganization.services;
 
+import jakarta.transaction.Transactional;
 import ma.suptech.MSorganization.entities.Department;
 import ma.suptech.MSorganization.entities.Job;
 import ma.suptech.MSorganization.enumerations.Responsibility;
 import ma.suptech.MSorganization.repositories.DepartmentRepository;
 import ma.suptech.MSorganization.repositories.JobRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Stream;
-
+@Service
+@Transactional
 public class OrganizationServiceImpl implements OrganizationService {
     private final DepartmentRepository departmentRepository;
     private final JobRepository jobRepository;
