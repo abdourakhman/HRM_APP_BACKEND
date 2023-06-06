@@ -22,12 +22,14 @@ public class ContractServiceImpl implements ContractService {
 
     @Override
     public Contract create(Contract contract) {
+        contract.setHumanResourceManager(humanRestClient.findHumanResourceManager(contract.getHumanResourceManagerID()));
         contract.setEmployee(humanRestClient.findEmployee(contract.getEmployeeID()));
         return  contractRepository.save(contract);
     }
 
     @Override
     public Contract update(Contract contract) {
+        contract.setHumanResourceManager(humanRestClient.findHumanResourceManager(contract.getHumanResourceManagerID()));
         contract.setEmployee(humanRestClient.findEmployee(contract.getEmployeeID()));
         return  contractRepository.save(contract);
     }
@@ -35,8 +37,10 @@ public class ContractServiceImpl implements ContractService {
     @Override
     public Contract find(Long id) {
         Contract contract = contractRepository.findById(id).orElse(null);
-        if(contract != null)
+        if(contract != null){
+            contract.setHumanResourceManager(humanRestClient.findHumanResourceManager(contract.getHumanResourceManagerID()));
             contract.setEmployee(humanRestClient.findEmployee(contract.getEmployeeID()));
+        }
         return contract;
     }
 
@@ -44,7 +48,10 @@ public class ContractServiceImpl implements ContractService {
     public List<Contract> findByEmployee(Long id) {
         List<Contract> contracts;
         contracts = contractRepository.findAll().stream().filter(contract -> contract.getEmployeeID().equals(id)).toList();
-        contracts.forEach(contract -> contract.setEmployee(humanRestClient.findEmployee(id)));
+        contracts.forEach(contract -> {
+            contract.setEmployee(humanRestClient.findEmployee(id));
+            contract.setHumanResourceManager(humanRestClient.findHumanResourceManager(contract.getHumanResourceManagerID()));
+        });
         return contracts;
     }
 
@@ -53,6 +60,7 @@ public class ContractServiceImpl implements ContractService {
         List<Contract> contracts = new ArrayList<>();
         contractRepository.findAll().forEach(contract -> {
             contract.setEmployee(humanRestClient.findEmployee(contract.getEmployeeID()));
+            contract.setHumanResourceManager(humanRestClient.findHumanResourceManager(contract.getHumanResourceManagerID()));
             contracts.add(contract);
         });
         return contracts;

@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import ma.suptech.MSresource.enumerations.Contract.Status;
 import ma.suptech.MSresource.enumerations.Contract.Type;
 import ma.suptech.MSresource.models.helper.Employee;
+import ma.suptech.MSresource.models.helper.HumanResourceManager;
 
 import java.time.LocalDate;
 
@@ -20,8 +21,10 @@ public class Contract {
     private Type type;
     private int remuneration;
     private Status status;
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Long employeeID ;
+    private Long humanResourceManagerID;
     @Transient
     private Employee employee;
+    @Transient
+    private HumanResourceManager humanResourceManager;
 }

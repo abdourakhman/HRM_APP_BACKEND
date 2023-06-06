@@ -22,7 +22,7 @@ public class TimeSheet {
     private Absence absence;
     private String comment;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private Long EmployeeID;
+    private Long employeeID;
     @Transient
     private Employee employee;
 }

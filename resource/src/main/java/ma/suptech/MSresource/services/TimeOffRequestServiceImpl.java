@@ -26,6 +26,7 @@ public class TimeOffRequestServiceImpl implements TimeOffRequestService {
     @Override
     public TimeOffRequest create(TimeOffRequest timeOffRequest) {
         timeOffRequest.setEmployee(humanRestClient.findEmployee(timeOffRequest.getEmployeeID()));
+        timeOffRequest.setHumanResourceManager(humanRestClient.findHumanResourceManager(timeOffRequest.getHumanResourceManagerID()));
         TimeOffRequest timeOffRequestSaved = timeOffRequestRepository.save(timeOffRequest);
         return timeOffRequestSaved;
     }
@@ -33,6 +34,7 @@ public class TimeOffRequestServiceImpl implements TimeOffRequestService {
     @Override
     public TimeOffRequest update(TimeOffRequest timeOffRequest) {
         timeOffRequest.setEmployee(humanRestClient.findEmployee(timeOffRequest.getEmployeeID()));
+        timeOffRequest.setHumanResourceManager(humanRestClient.findHumanResourceManager(timeOffRequest.getHumanResourceManagerID()));
         TimeOffRequest timeOffRequestSaved =  timeOffRequestRepository.save(timeOffRequest);
         return timeOffRequestSaved;
     }
@@ -42,6 +44,7 @@ public class TimeOffRequestServiceImpl implements TimeOffRequestService {
         List<TimeOffRequest> allTimeOffRequest = new ArrayList<>();
         timeOffRequestRepository.findAll().forEach(timeOffRequest -> {
             timeOffRequest.setEmployee(humanRestClient.findEmployee(timeOffRequest.getEmployeeID()));
+            timeOffRequest.setHumanResourceManager(humanRestClient.findHumanResourceManager(timeOffRequest.getHumanResourceManagerID()));
             allTimeOffRequest.add(timeOffRequest);
         });
         return allTimeOffRequest;
@@ -55,7 +58,10 @@ public class TimeOffRequestServiceImpl implements TimeOffRequestService {
                 .stream().filter(timeOffRequest ->
                    timeOffRequest.getEmployeeID() == employee.getId()
                 ).toList();
-        timeOffRequests.forEach(timeOffRequest -> {timeOffRequest.setEmployee(employee);});
+        timeOffRequests.forEach(timeOffRequest -> {
+            timeOffRequest.setEmployee(employee);
+            timeOffRequest.setHumanResourceManager(humanRestClient.findHumanResourceManager(timeOffRequest.getHumanResourceManagerID()));
+        });
         return timeOffRequests;
     }
 
@@ -68,6 +74,7 @@ public class TimeOffRequestServiceImpl implements TimeOffRequestService {
                         timeOffRequest.getType().equals(type)
                 ).map(timeOffRequest -> {
                     timeOffRequest.setEmployee(humanRestClient.findEmployee(timeOffRequest.getEmployeeID()));
+                    timeOffRequest.setHumanResourceManager(humanRestClient.findHumanResourceManager(timeOffRequest.getHumanResourceManagerID()));
                     return timeOffRequest;
                 }).collect(Collectors.toList());
     }
@@ -76,6 +83,7 @@ public class TimeOffRequestServiceImpl implements TimeOffRequestService {
     public TimeOffRequest find(Long id) {
         TimeOffRequest timeOffRequest = timeOffRequestRepository.findById(id).orElse(null);
         if(timeOffRequest != null){
+            timeOffRequest.setHumanResourceManager(humanRestClient.findHumanResourceManager(timeOffRequest.getHumanResourceManagerID()));
             timeOffRequest.setEmployee(humanRestClient.findEmployee(timeOffRequest.getEmployeeID()));
         }
         return timeOffRequest;

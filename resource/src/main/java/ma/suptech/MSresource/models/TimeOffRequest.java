@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import ma.suptech.MSresource.enumerations.timeOffRequest.Status;
 import ma.suptech.MSresource.enumerations.timeOffRequest.Type;
 import ma.suptech.MSresource.models.helper.Employee;
+import ma.suptech.MSresource.models.helper.HumanResourceManager;
 
 import java.time.LocalDate;
 
@@ -23,8 +24,10 @@ public class TimeOffRequest {
     private Status requestStatus;
     private LocalDate desiredStartDate;
     private LocalDate desiredEndDate;
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Long employeeID;
+    private Long humanResourceManagerID;
     @Transient
     private Employee employee;
+    @Transient
+    private HumanResourceManager humanResourceManager;
 }
