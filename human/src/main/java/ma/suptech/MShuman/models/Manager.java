@@ -1,6 +1,7 @@
 package ma.suptech.MShuman.models;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,6 +28,7 @@ public class Manager {
     private LocalDate hiringDate;
     private Status status ;
     private String photoUrl;
+    @JsonBackReference
     @OneToMany(mappedBy = "manager")
     private Collection<Employee> employees;
     private Long jobID;

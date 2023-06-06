@@ -31,9 +31,9 @@ public class ActorsServiceImpl implements ActorsService {
             "Kassidh","Fayette","Lawson"
     ).toList();
     List<String> firstNames = Stream.of(
-            "Emma", "Liam", "Olivier", "Noah", "Sandrine",
-            "Isabella", "Sophia", "Mia", "Charlotte", "sylvie",
-            "Harper", "Will alexander", "Luna", "Imêne", "Salma",
+            "Emmanuel", "Liam", "Olivier", "Noah", "Sandrine",
+            "Isabella", "Sophia", "Mia", "Charlotte", "Sylvie",
+            "Harper", "Will alexander", "El hadji", "Imêne", "Salma",
             "James", "Benjamin", "Lucas", "Henry", "Alexander",
             "Abdourahmane","Khadija","Fayçal","Hamza","Eric"
     ).toList();
@@ -79,8 +79,8 @@ public class ActorsServiceImpl implements ActorsService {
             rh.setHiringDate(rh.getBirthday().plusYears(new Random().nextInt(20,25)));
             rh.setStatus(statusList.get(new Random().nextInt(statusList.size())));
             rh.setPhotoUrl(photoUrl);
-            rh.setDepartmentID(departmentID.get(new Random().nextInt(departmentID.size())));
-            rh.setJobID(jobID.get(new Random().nextInt(jobID.size())));
+            rh.setDepartmentID(15L);
+            rh.setJobID(15L);
 
             humanResourceManagerRepository.save(rh);
         }
@@ -90,7 +90,7 @@ public class ActorsServiceImpl implements ActorsService {
     @Override
     public void initManager() {
         telephoneNumbers.clear();
-        while (telephoneNumbers.size() < 20) {
+        while (telephoneNumbers.size() < 15) {
             int number = generatePhoneNumber();
             telephoneNumbers.add(number);
         }
@@ -98,7 +98,7 @@ public class ActorsServiceImpl implements ActorsService {
             Manager manager = new Manager();
             manager.setName(lastNames.get(new Random().nextInt(lastNames.size())));
             manager.setFirstName(firstNames.get(new Random().nextInt(firstNames.size())));
-            if(manager.getFirstName().startsWith("S") || manager.getFirstName().startsWith("Mi")|| manager.getFirstName().startsWith("i")|| manager.getFirstName().startsWith("kh"))
+            if(manager.getFirstName().startsWith("S") || manager.getFirstName().startsWith("Mi")|| manager.getFirstName().startsWith("I")|| manager.getFirstName().startsWith("Kh"))
                 manager.setGender(Gender.FEMALE);
             else
                 manager.setGender(Gender.MALE);
@@ -127,7 +127,7 @@ public class ActorsServiceImpl implements ActorsService {
             Employee employee = new Employee();
             employee.setName(lastNames.get(new Random().nextInt(lastNames.size())));
             employee.setFirstName(firstNames.get(new Random().nextInt(firstNames.size())));
-            if(employee.getFirstName().startsWith("S") || employee.getFirstName().startsWith("Mi")|| employee.getFirstName().startsWith("i")|| employee.getFirstName().startsWith("kh"))
+            if(employee.getFirstName().startsWith("S") || employee.getFirstName().startsWith("Mi")|| employee.getFirstName().startsWith("I")|| employee.getFirstName().startsWith("Kh"))
                 employee.setGender(Gender.FEMALE);
             else
                 employee.setGender(Gender.MALE);
@@ -138,28 +138,28 @@ public class ActorsServiceImpl implements ActorsService {
             employee.setHiringDate(employee.getBirthday().plusYears(new Random().nextInt(20,25)));
             employee.setStatus(statusList.get(new Random().nextInt(statusList.size())));
             employee.setPhotoUrl(photoUrl);
+            employee.setDepartmentID(departmentID.get(new Random().nextInt(departmentID.size())));
+            employee.setJobID(jobID.get(new Random().nextInt(jobID.size())));
+            while (employee.getJobID().equals(15L))//rh
+                employee.setJobID(jobID.get(new Random().nextInt(jobID.size())));
             List<Manager> managers  = managerRepository.findAll()
                     .stream().filter(manager -> manager.getDepartmentID().equals(employee.getDepartmentID()))
                     .collect(Collectors.toList());
             Manager manager =null;
-            if(managers != null)
+            if(managers.size() > 0)
                 manager = managers.get(new Random().nextInt(managers.size()));
             employee.setManager(manager);
-            employee.setDepartmentID(departmentID.get(new Random().nextInt(departmentID.size())));
-            employee.setJobID(jobID.get(new Random().nextInt(jobID.size())));
-
             employeeRepository.save(employee);
         }
     }
     private static String generateRandomAddress() {
-        String[] streetNames = { "Rue des Fleurs", "Avenue du Soleil", "Boulevard des Étoiles", "Chemin de la Rivière", "Place de la Mairie","Les Hôpitaux","Maarif","Beau séjour" };
-        String[] cities = {"Casablanca","Paris", "Marseille", "Lyon", "Rabat", "Saint Louis","Berlin" };
-        String[] countries = { "Maroc","France", "Germany", "United States", "United Kingdom", "Canada" };
+        String[] streetNames = { "Maarouf", "Avenue du Soleil", "Boulevard des Étoiles", "Chemin de la Rivière", "Place de la Mairie","Les Hôpitaux","Maarif","Beau séjour","Derb Omar","Mers sultan" };
+        String[] cities = {"Casablanca","Rabat", "Mohamedia", "Meknès", "Rabat", "Agadir","Tanger" };
+        String country = "Maroc";
 
         String streetName = streetNames[(int) (Math.random() * streetNames.length)];
         int streetNumber = (int) (Math.random() * 100) + 1;
         String city = cities[(int) (Math.random() * cities.length)];
-        String country = countries[(int) (Math.random() * countries.length)];
 
         return streetNumber + " " + streetName + ", " + city + ", " + country;
     }
