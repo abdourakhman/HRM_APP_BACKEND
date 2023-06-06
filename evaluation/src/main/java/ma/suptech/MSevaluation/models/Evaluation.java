@@ -14,7 +14,7 @@ public class Evaluation {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private LocalDate evaluationDate;
-    private String goalsSet; //objective
+    private String goalset; //objective
     @OneToMany(mappedBy = "evaluation")
     private Collection<ScoreCard> scoreCards;
 }
