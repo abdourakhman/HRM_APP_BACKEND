@@ -17,7 +17,7 @@ public class OrganizationConfig {
     CommandLineRunner initOrganization(){
         return args -> {
             organizationService.initDepartment();
-            organizationService.initDepartment();
+            organizationService.initJob();
         };
     }
 }

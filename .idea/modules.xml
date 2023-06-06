@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/configuration/configuration.iml" filepath="$PROJECT_DIR$/configuration/configuration.iml" />
-      <module fileurl="file://$PROJECT_DIR$/employee_evaluation/employee_evaluation.iml" filepath="$PROJECT_DIR$/employee_evaluation/employee_evaluation.iml" />
       <module fileurl="file://$PROJECT_DIR$/evaluation/evaluation.iml" filepath="$PROJECT_DIR$/evaluation/evaluation.iml" />
       <module fileurl="file://$PROJECT_DIR$/human/human.iml" filepath="$PROJECT_DIR$/human/human.iml" />
       <module fileurl="file://$PROJECT_DIR$/organization/organization.iml" filepath="$PROJECT_DIR$/organization/organization.iml" />

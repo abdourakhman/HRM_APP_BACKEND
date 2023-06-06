@@ -11,7 +11,6 @@
         <module name="configuration" />
         <module name="resource" />
         <module name="organization" />
-        <module name="employee_evaluation" />
         <module name="human" />
         <module name="register" />
       </profile>

@@ -40,8 +40,8 @@ public class OrganizationServiceImpl implements OrganizationService {
                 "Responsable des ventes",
                 "Spécialiste en marketing",
                 "Traducteur",
-                "Infirmier",
-                "Enseignant",
+                "Secrétaire de bureau",
+                "Formateur",
                 "Consultant RH",
                 "Technicien de maintenance",
                 "Ingénieur qualité",
@@ -55,6 +55,7 @@ public class OrganizationServiceImpl implements OrganizationService {
                 "Analysez et interprétez des données pour des insights.",
                 "Gérez les opérations comptables et financières.",
                 "Concevez et développez des logiciels et des systèmes.",
+                "concevez l'architecture logicielle globale du système d'information",
                 "Planifiez et supervisez des projets.",
                 "Gérez les infrastructures système et réseau.",
                 "Analysez et évaluez les performances financières.",
@@ -62,7 +63,7 @@ public class OrganizationServiceImpl implements OrganizationService {
                 "Dirigez et motivez une équipe de vente.",
                 "Élaborez des stratégies de marketing et de publicité.",
                 "Effectuez des traductions précises et de qualité.",
-                "Fournissez des soins médicaux et infirmiers.",
+                "Prenez des rendez-vous et occupez vous de tout ce qui est  bureautique.",
                 "Enseignez et transmettez des connaissances.",
                 "Conseillez et accompagnez les employés et les RH.",
                 "Assurez la maintenance et la réparation des équipements.",
@@ -73,26 +74,26 @@ public class OrganizationServiceImpl implements OrganizationService {
         ).toList();
 
         List<String> skillsJobs = Stream.of(
-                "Développeur Java, Java, Spring, SQL",
-                "Data Analyst, Analyse de données, SQL, Python",
-                "Comptable, Comptabilité, Gestion financière, Fiscalité",
-                "Ingénieur logiciel, Langage C, C++, Java, Algorithmes",
-                "Architecte système, Architecture logicielle, Systèmes distribués",
-                "Chef de projet, Gestion de projet, Leadership, Communication",
-                "Administrateur système, Administration système, Réseaux",
-                "Analyste financier, Analyse financière, Prévisions, Reporting",
-                "Designer graphique, Design, Logiciels graphiques, Créativité",
-                "Responsable des ventes, Négociation, Prospection, Gestion de comptes",
-                "Spécialiste en marketing, Stratégie marketing, Analyse de marché",
-                "Traducteur, Langues étrangères, Maîtrise des cultures",
-                "Infirmier, Soins infirmiers, Santé, Empathie",
-                "Enseignant, Pédagogie, Gestion de classe, Matières enseignées",
-                "Consultant RH, Gestion des ressources humaines, Recrutement",
-                "Technicien de maintenance, Maintenance préventive, Dépannage",
-                "Ingénieur qualité, Contrôle qualité, Normes ISO",
-                "Gestionnaire de projet, Planification, Suivi, Résolution de problèmes",
-                "Assistant administratif, Gestion administrative, Organisations",
-                "Assistant de direction, Assistanat, Coordination, Communication"
+                "Java, Spring, SQL",
+                "Analyse de données, SQL, Python",
+                "Comptabilité, Gestion financière, Fiscalité",
+                "Langage C, C++, Java, Algorithmes",
+                "Architecture logicielle, Systèmes distribués",
+                "Gestion de projet, Leadership, Communication",
+                "Administration système, Réseaux",
+                "Analyse financière, Prévisions, Reporting",
+                "Design, Logiciels graphiques, Créativité",
+                "Négociation, Prospection, Gestion de comptes",
+                "SStratégie marketing, Analyse de marché",
+                "Langues étrangères, Maîtrise des cultures",
+                "Communication, Assiduité, Empathie, maîtrise suite bureautique",
+                "Pédagogie, Gestion de classe, Matières enseignées",
+                "Gestion des ressources humaines, Recrutement",
+                "Maintenance préventive, Dépannage",
+                "Contrôle qualité, Normes ISO",
+                "Planification, Suivi, Résolution de problèmes",
+                "Gestion administrative, Organisations",
+                "Assistanat, Coordination, Communication"
         ).toList();
 
         for (int i =0; i<jobs.size();i++){
@@ -101,6 +102,9 @@ public class OrganizationServiceImpl implements OrganizationService {
             job.setDescription(jobDescriptions.get(i));
             job.setSkills(skillsJobs.get(i));
             job.setLevelOfResponsibility(responsibilities.get(new Random().nextInt(responsibilities.size())));
+            if(Arrays.asList("Ingénieur logiciel","Architecte système", "Chef de projet","Comptable","Administrateur système")
+                    .contains(job.getTitle()))
+                job.setLevelOfResponsibility(Responsibility.HIGH);
             jobRepository.save(job);
         }
 
