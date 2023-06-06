@@ -1,14 +1,13 @@
-package ma.suptech.MSemployee_evaluation.API;
+package ma.suptech.MSevaluation.API;
 
-import ma.suptech.MSemployee_evaluation.entities.Evaluation;
-import ma.suptech.MSemployee_evaluation.services.EvaluationService;
+import ma.suptech.MSevaluation.models.Evaluation;
+import ma.suptech.MSevaluation.services.EvaluationService;
 import org.springframework.web.bind.annotation.*;
-
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/hr")
+@RequestMapping("/api")
 public class EvaluationAPI {
 
     private final EvaluationService evaluationService;

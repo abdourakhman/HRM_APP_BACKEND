@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="evaluation" />
+        <module name="configuration" />
+        <module name="resource" />
+        <module name="organization" />
+        <module name="employee_evaluation" />
+        <module name="human" />
+        <module name="register" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="configuration" target="17" />
+      <module name="contract" target="17" />
+      <module name="employe_evaluation" target="17" />
+      <module name="employee_evaluation" target="17" />
+      <module name="evaluation" target="17" />
+      <module name="human" target="17" />
+      <module name="organization" target="17" />
+      <module name="project" target="17" />
+      <module name="register" target="17" />
+      <module name="requestTimeOff" target="17" />
+      <module name="resource" target="17" />
+      <module name="responsible" target="17" />
+      <module name="timesheet" target="17" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="configuration" options="-parameters" />
+      <module name="contract" options="-parameters" />
+      <module name="employe_evaluation" options="-parameters" />
+      <module name="employee_evaluation" options="-parameters" />
+      <module name="evaluation" options="-parameters" />
+      <module name="human" options="-parameters" />
+      <module name="organization" options="-parameters" />
+      <module name="project" options="-parameters" />
+      <module name="register" options="-parameters" />
+      <module name="requestTimeOff" options="-parameters" />
+      <module name="resource" options="-parameters" />
+      <module name="responsible" options="-parameters" />
+      <module name="timesheet" options="-parameters" />
+    </option>
+  </component>
+</project>

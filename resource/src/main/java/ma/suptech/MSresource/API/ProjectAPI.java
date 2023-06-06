@@ -14,12 +14,12 @@ public class ProjectAPI {
     public ProjectAPI(ProjectService projectService) {
         this.projectService = projectService;
     }
-    @PostMapping("project/")
+    @PostMapping("project")
     public Project addProject(@RequestBody Project project){
         return projectService.add(project);
     }
 
-    @PutMapping("project/")
+    @PutMapping("project")
     public Project updateProject(@RequestBody Project project){
         return projectService.update(project);
     }
@@ -29,7 +29,7 @@ public class ProjectAPI {
         return projectService.findOne(id);
     }
 
-    @GetMapping("projects/")
+    @GetMapping("projects")
     public List<Project> listProject(){
         return projectService.findAll();
     }
@@ -39,7 +39,7 @@ public class ProjectAPI {
         return projectService.findByManager(idManager);
     }
 
-    @GetMapping("projects/{id}")
+    @DeleteMapping("project/{id}")
     public void deleteProject(@PathVariable Long id){
         projectService.delete(id);
     }

@@ -21,13 +21,13 @@ public class GoalSetServiceImpl implements GoalSetService {
     @Override
     public GoalSet add(GoalSet goalSet) {
         goalSet.setEmployee(humanRestClient.findEmployee(goalSet.getEmployeeID()));
-        return goalSet;
+        return goalSetRepository.save(goalSet);
     }
 
     @Override
     public GoalSet update(GoalSet goalSet) {
         goalSet.setEmployee(humanRestClient.findEmployee(goalSet.getEmployeeID()));
-        return goalSet;
+        return goalSetRepository.save(goalSet);
     }
 
     @Override

@@ -1,5 +1,5 @@
 package ma.suptech.MSresource.enumerations.timeOffRequest;
 
 public enum Type {
-    ANNUAL,MATERNITY,DISEASE,FORMATION
+    FORMATION,DISEASE,MATERNITY,ANNUAL,OTHER
 }

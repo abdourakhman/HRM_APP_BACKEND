@@ -1,4 +1,4 @@
-package ma.suptech.MSemployee_evaluation.entities;
+package ma.suptech.MSevaluation.models.helper;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

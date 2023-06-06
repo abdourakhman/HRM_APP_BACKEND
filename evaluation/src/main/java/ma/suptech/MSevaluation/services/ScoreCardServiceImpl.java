@@ -1,45 +1,66 @@
 package ma.suptech.MSevaluation.services;
 
 
-import ma.suptech.MSevaluation.models.Evaluation;
-import ma.suptech.MSevaluation.repositories.EvaluationRepository;
+import ma.suptech.MSevaluation.client.HumanRestClient;
+import ma.suptech.MSevaluation.models.ScoreCard;
+import ma.suptech.MSevaluation.repositories.ScoreCardRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
-public class EvaluationServiceImpl implements EvaluationService {
+public class ScoreCardServiceImpl implements ScoreCardService {
 
-    private final EvaluationRepository evaluationRepository;
+    private final ScoreCardRepository scoreCardRepository;
+    private final HumanRestClient humanRestClient;
 
-    public EvaluationServiceImpl(EvaluationRepository evaluationRepository){
-        this.evaluationRepository = evaluationRepository;
+    public ScoreCardServiceImpl(ScoreCardRepository scoreCardRepository, HumanRestClient humanRestClient){
+        this.scoreCardRepository = scoreCardRepository;
+        this.humanRestClient = humanRestClient;
     }
     @Override
-    public Evaluation save(Evaluation evaluation) {
-        return evaluationRepository.save(evaluation);
-    }
-
-    @Override
-    public Evaluation update(Evaluation evaluation) {
-        return evaluationRepository.save(evaluation);
+    public ScoreCard save(ScoreCard scoreCard) {
+        scoreCard.setEmployee(humanRestClient.findEmployee(scoreCard.getEmployeeID()));
+        return scoreCardRepository.save(scoreCard);
     }
 
     @Override
-    public Evaluation find(Long id) {
-        return evaluationRepository.findById(id).orElse(null);
+    public ScoreCard update(ScoreCard scoreCard) {
+        scoreCard.setEmployee(humanRestClient.findEmployee(scoreCard.getEmployeeID()));
+        return scoreCardRepository.save(scoreCard);
     }
 
     @Override
-    public List<Evaluation> getAll() {
-        List<Evaluation> evaluations = new ArrayList<>();
-        evaluationRepository.findAll().forEach(evaluation -> evaluations.add(evaluation));
-        return evaluations;
+    public ScoreCard find(Long id) {
+        ScoreCard scoreCard = scoreCardRepository.findById(id).orElse(null);
+        if(scoreCard != null)
+            scoreCard.setEmployee(humanRestClient.findEmployee(scoreCard.getEmployeeID()));
+        return scoreCard;
+    }
+
+    @Override
+    public List<ScoreCard> getScoreCardEmployee(Long idEmployee) {
+        return scoreCardRepository.findAll().stream()
+                .filter(scoreCard -> scoreCard.getEmployeeID().equals(idEmployee))
+                .map(scoreCard -> {
+                    scoreCard.setEmployee(humanRestClient.findEmployee(scoreCard.getEmployeeID()));
+                    return scoreCard;
+                }).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ScoreCard> getAll() {
+        return scoreCardRepository.findAll().stream()
+                .map(scoreCard -> {
+                    scoreCard.setEmployee(humanRestClient.findEmployee(scoreCard.getEmployeeID()));
+                    return scoreCard;
+                }).collect(Collectors.toList());
     }
 
     @Override
     public void remove(Long id) {
-        evaluationRepository.deleteById(id);
+        scoreCardRepository.deleteById(id);
     }
 }

@@ -1,7 +1,7 @@
 package ma.suptech.MSevaluation.repositories;
 
-import ma.suptech.MSevaluation.models.Evaluation;
+import ma.suptech.MSevaluation.models.ScoreCard;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface EvaluationRepository extends JpaRepository<Evaluation,Long> {
+public interface ScoreCardRepository extends JpaRepository<ScoreCard,Long> {
 }

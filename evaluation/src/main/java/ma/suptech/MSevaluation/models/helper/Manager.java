@@ -1,10 +1,10 @@
-package ma.suptech.MSresource.models.helper;
+package ma.suptech.MSevaluation.models.helper;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ma.suptech.MSresource.enumerations.helper.Gender;
-import ma.suptech.MSresource.enumerations.helper.Status;
+import ma.suptech.MSevaluation.enumerations.Gender;
+import ma.suptech.MSevaluation.enumerations.Status;
 
 import java.time.LocalDate;
 import java.util.Collection;

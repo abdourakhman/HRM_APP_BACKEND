@@ -1,7 +1,8 @@
-package ma.suptech.MSemployee_evaluation.services;
+package ma.suptech.MSevaluation.services;
 
-import ma.suptech.MSemployee_evaluation.entities.Evaluation;
-import ma.suptech.MSemployee_evaluation.repositories.EvaluationRepository;
+
+import ma.suptech.MSevaluation.models.Evaluation;
+import ma.suptech.MSevaluation.repositories.EvaluationRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

@@ -1,41 +1,46 @@
 package ma.suptech.MSevaluation.API;
 
-import ma.suptech.MSevaluation.models.Evaluation;
-import ma.suptech.MSevaluation.services.EvaluationService;
+import ma.suptech.MSevaluation.models.ScoreCard;
+import ma.suptech.MSevaluation.services.ScoreCardService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-public class EvaluationAPI {
+public class ScoreCardAPI {
 
-    private final EvaluationService evaluationService;
+    private final ScoreCardService scoreCardService;
 
-    public EvaluationAPI(EvaluationService evaluationService) {
-        this.evaluationService = evaluationService;
-    }
-
-    @PostMapping("/evaluation")
-    public Evaluation save(@RequestBody Evaluation evaluation){
-        return evaluationService.save(evaluation);
-    }
-    @PutMapping("/evaluation")
-    public Evaluation update(@RequestBody Evaluation evaluation){
-        return evaluationService.update(evaluation);
-    }
-    @GetMapping("evaluations/{id}")
-    public Evaluation find(@PathVariable Long id){
-        return evaluationService.find(id);
+    public ScoreCardAPI(ScoreCardService scoreCardService) {
+        this.scoreCardService = scoreCardService;
     }
 
-    @GetMapping("/evaluations")
-    public List<Evaluation> list(){
-        return evaluationService.getAll();
+    @PostMapping("/scoreCard")
+    public ScoreCard save(@RequestBody ScoreCard scoreCard){
+        return scoreCardService.save(scoreCard);
     }
-    @DeleteMapping("/evaluation/{id}")
+    @PutMapping("/scoreCard")
+    public ScoreCard update(@RequestBody ScoreCard scoreCard){
+        return scoreCardService.update(scoreCard);
+    }
+    @GetMapping("scoreCards/{id}")
+    public ScoreCard find(@PathVariable Long id){
+        return scoreCardService.find(id);
+    }
+
+    @GetMapping("/scoreCards/employee/{idEmployee}")
+    public List<ScoreCard> listScoreCardEmployee(@PathVariable Long idEmployee){
+        return scoreCardService.getScoreCardEmployee(idEmployee);
+    }
+
+    @GetMapping("/scoreCards")
+    public List<ScoreCard> list(){
+        return scoreCardService.getAll();
+    }
+    @DeleteMapping("/scoreCard/{id}")
     public void remove(@PathVariable Long id){
-        evaluationService.remove(id);
+        scoreCardService.remove(id);
     }
 
 }

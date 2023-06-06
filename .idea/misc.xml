@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/configuration/pom.xml" />
+        <option value="$PROJECT_DIR$/organization/pom.xml" />
+        <option value="$PROJECT_DIR$/register/pom.xml" />
+        <option value="$PROJECT_DIR$/timesheet/pom.xml" />
+        <option value="$PROJECT_DIR$/requestTimeOff/pom.xml" />
+        <option value="$PROJECT_DIR$/project/pom.xml" />
+        <option value="$PROJECT_DIR$/responsible/pom.xml" />
+        <option value="$PROJECT_DIR$/evaluation/pom.xml" />
+        <option value="$PROJECT_DIR$/contract/pom.xml" />
+        <option value="$PROJECT_DIR$/employee_evaluation/pom.xml" />
+        <option value="$PROJECT_DIR$/human/pom.xml" />
+        <option value="$PROJECT_DIR$/resource/pom.xml" />
+      </list>
+    </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/employe_evaluation/pom.xml" />
+      </set>
+    </option>
+  </component>
+  <component name="ProjectRootManager">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+</project>
