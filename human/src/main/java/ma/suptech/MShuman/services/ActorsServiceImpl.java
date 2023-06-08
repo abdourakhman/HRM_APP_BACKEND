@@ -15,6 +15,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -65,66 +66,12 @@ public class ActorsServiceImpl implements ActorsService {
             telephoneNumbers.add(number);
         }
         for (int i=0; i<20;i++){
+            String registrationNumber = UUID.randomUUID().toString();
             HumanResourceManager rh = new HumanResourceManager();
-            rh.setName(lastNames.get(new Random().nextInt(lastNames.size())));
-            rh.setFirstName(firstNames.get(new Random().nextInt(firstNames.size())));
-            if(rh.getFirstName().startsWith("S") || rh.getFirstName().startsWith("Mi")|| rh.getFirstName().startsWith("i")|| rh.getFirstName().startsWith("kh"))
-                rh.setGender(Gender.FEMALE);
-            else
-                rh.setGender(Gender.MALE);
-            rh.setBirthday(birthdays.get(new Random().nextInt(birthdays.size())));
-            rh.setAddress(addresses.get(new Random().nextInt(addresses.size())));
-            rh.setTelephone(telephoneNumbers.get(new Random().nextInt(telephoneNumbers.size())));
-            rh.setEmail(rh.getFirstName()+new Random().nextInt(10,2000)+"@gmail.com");
-            rh.setHiringDate(rh.getBirthday().plusYears(new Random().nextInt(20,25)));
-            rh.setStatus(statusList.get(new Random().nextInt(statusList.size())));
-            rh.setPhotoUrl(photoUrl);
-            rh.setDepartmentID(15L);
-            rh.setJobID(15L);
-
-            humanResourceManagerRepository.save(rh);
-        }
-
-    }
-
-    @Override
-    public void initManager() {
-        telephoneNumbers.clear();
-        while (telephoneNumbers.size() < 15) {
-            int number = generatePhoneNumber();
-            telephoneNumbers.add(number);
-        }
-        for (int i=0; i<15;i++){
-            Manager manager = new Manager();
-            manager.setName(lastNames.get(new Random().nextInt(lastNames.size())));
-            manager.setFirstName(firstNames.get(new Random().nextInt(firstNames.size())));
-            if(manager.getFirstName().startsWith("S") || manager.getFirstName().startsWith("Mi")|| manager.getFirstName().startsWith("I")|| manager.getFirstName().startsWith("Kh"))
-                manager.setGender(Gender.FEMALE);
-            else
-                manager.setGender(Gender.MALE);
-            manager.setBirthday(birthdays.get(new Random().nextInt(birthdays.size())));
-            manager.setAddress(addresses.get(new Random().nextInt(addresses.size())));
-            manager.setTelephone(telephoneNumbers.get(new Random().nextInt(telephoneNumbers.size())));
-            manager.setEmail(manager.getFirstName()+new Random().nextInt(10,2000)+"@gmail.com");
-            manager.setHiringDate(manager.getBirthday().plusYears(new Random().nextInt(20,25)));
-            manager.setStatus(statusList.get(new Random().nextInt(statusList.size())));
-            manager.setPhotoUrl(photoUrl);
-            manager.setDepartmentID(departmentID.get(new Random().nextInt(departmentID.size())));
-            manager.setJobID(jobID.get(new Random().nextInt(jobID.size())));
-
-            managerRepository.save(manager);
-        }
-    }
-
-    @Override
-    public void initEmployee() {
-        telephoneNumbers.clear();
-        while (telephoneNumbers.size() < 50) {
-            int number = generatePhoneNumber();
-            telephoneNumbers.add(number);
-        }
-        for (int i=0; i<50;i++){
             Employee employee = new Employee();
+            //affecting the same  registrationNumber to employee and rh
+            rh.setRegistrationNumber(registrationNumber);
+            employee.setRegistrationNumber(registrationNumber);
             employee.setName(lastNames.get(new Random().nextInt(lastNames.size())));
             employee.setFirstName(firstNames.get(new Random().nextInt(firstNames.size())));
             if(employee.getFirstName().startsWith("S") || employee.getFirstName().startsWith("Mi")|| employee.getFirstName().startsWith("I")|| employee.getFirstName().startsWith("Kh"))
@@ -138,13 +85,87 @@ public class ActorsServiceImpl implements ActorsService {
             employee.setHiringDate(employee.getBirthday().plusYears(new Random().nextInt(20,25)));
             employee.setStatus(statusList.get(new Random().nextInt(statusList.size())));
             employee.setPhotoUrl(photoUrl);
-            employee.setDepartmentID(departmentID.get(new Random().nextInt(departmentID.size())));
-            employee.setJobID(jobID.get(new Random().nextInt(jobID.size())));
+            employee.setDepartmentID(10L); //departmentRH
+            employee.setJobID(15L);//rh job
+            humanResourceManagerRepository.save(rh);
+            employeeRepository.save(employee);
+        }
+
+    }
+
+    @Override
+    public void initManager() {
+        telephoneNumbers.clear();
+        while (telephoneNumbers.size() < 15) {
+            int number = generatePhoneNumber();
+            telephoneNumbers.add(number);
+        }
+        for (int i=0; i<15;i++){
+            String registrationNumber = UUID.randomUUID().toString();
+            Manager manager = new Manager();
+            Employee employee = new Employee();
+            manager.setRegistrationNumber(registrationNumber);
+            employee.setRegistrationNumber(registrationNumber);
+            employee.setName(lastNames.get(new Random().nextInt(lastNames.size())));
+            employee.setFirstName(firstNames.get(new Random().nextInt(firstNames.size())));
+            if(employee.getFirstName().startsWith("S") || employee.getFirstName().startsWith("Mi")|| employee.getFirstName().startsWith("I")|| employee.getFirstName().startsWith("Kh"))
+                employee.setGender(Gender.FEMALE);
+            else
+                employee.setGender(Gender.MALE);
+            employee.setBirthday(birthdays.get(new Random().nextInt(birthdays.size())));
+            employee.setAddress(addresses.get(new Random().nextInt(addresses.size())));
+            employee.setTelephone(telephoneNumbers.get(new Random().nextInt(telephoneNumbers.size())));
+            employee.setEmail(employee.getFirstName()+new Random().nextInt(10,2000)+"@gmail.com");
+            employee.setHiringDate(employee.getBirthday().plusYears(new Random().nextInt(20,25)));
+            employee.setStatus(statusList.get(new Random().nextInt(statusList.size())));
+            employee.setPhotoUrl(photoUrl);
+            employee.setDepartmentID(departmentID.stream().filter(elt-> elt != 10L).toList().get(new Random().nextInt(departmentID.size()-1)));
+            employee.setJobID(jobID.stream().filter(elt-> elt != 15L).toList().get(new Random().nextInt(jobID.size()-1))); //exclusion rh
+            employeeRepository.save(employee);
+            managerRepository.save(manager);
+        }
+    }
+
+    @Override
+    public void initEmployee() {
+        telephoneNumbers.clear();
+        while (telephoneNumbers.size() < 50) {
+            int number = generatePhoneNumber();
+            telephoneNumbers.add(number);
+        }
+        for (int i=0; i<50;i++){
+            String registrationNumber = UUID.randomUUID().toString();
+            Employee employee = new Employee();
+            employee.setRegistrationNumber(registrationNumber);
+            employee.setName(lastNames.get(new Random().nextInt(lastNames.size())));
+            employee.setFirstName(firstNames.get(new Random().nextInt(firstNames.size())));
+            if(employee.getFirstName().startsWith("S") || employee.getFirstName().startsWith("Mi")|| employee.getFirstName().startsWith("I")|| employee.getFirstName().startsWith("Kh"))
+                employee.setGender(Gender.FEMALE);
+            else
+                employee.setGender(Gender.MALE);
+            employee.setBirthday(birthdays.get(new Random().nextInt(birthdays.size())));
+            employee.setAddress(addresses.get(new Random().nextInt(addresses.size())));
+            employee.setTelephone(telephoneNumbers.get(new Random().nextInt(telephoneNumbers.size())));
+            employee.setEmail(employee.getFirstName()+new Random().nextInt(10,2000)+"@gmail.com");
+            employee.setHiringDate(employee.getBirthday().plusYears(new Random().nextInt(20,25)));
+            employee.setStatus(statusList.get(new Random().nextInt(statusList.size())));
+            employee.setPhotoUrl(photoUrl);
+            employee.setDepartmentID(departmentID.stream().filter(elt-> elt != 10L).toList().get(new Random().nextInt(departmentID.size()-1)));
+            employee.setJobID(jobID.stream().filter(elt-> elt != 15L).toList().get(new Random().nextInt(jobID.size()-1))); //exclusion rh
             while (employee.getJobID().equals(15L))//rh
                 employee.setJobID(jobID.get(new Random().nextInt(jobID.size())));
-            List<Manager> managers  = managerRepository.findAll()
-                    .stream().filter(manager -> manager.getDepartmentID().equals(employee.getDepartmentID()))
-                    .collect(Collectors.toList());
+            List<Manager> managers = new ArrayList<>();
+
+            managerRepository.findAll()
+            .forEach(manager -> {
+                employeeRepository.findAll()
+                        .forEach(employee1 -> {
+                            if (employee1.getDepartmentID().equals(employee.getDepartmentID()))
+                                if(employee1.getRegistrationNumber().equals(manager.getRegistrationNumber()))
+                                    managers.add(manager);
+                        });
+                    });
+
             Manager manager =null;
             if(managers.size() > 0)
                 manager = managers.get(new Random().nextInt(managers.size()));

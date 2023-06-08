@@ -1,86 +1,117 @@
 package ma.suptech.MShuman.services;
 
 import ma.suptech.MShuman.client.OrganizationRestClient;
+import ma.suptech.MShuman.models.Employee;
 import ma.suptech.MShuman.models.Manager;
-import ma.suptech.MShuman.models.help.Department;
-import ma.suptech.MShuman.models.help.Job;
+import ma.suptech.MShuman.repositories.EmployeeRepository;
 import ma.suptech.MShuman.repositories.ManagerRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.stream.Collectors;
 
 @Service
 public class ManagerServiceImpl implements ManagerService {
     private final ManagerRepository managerRepository;
+    private final EmployeeRepository employeeRepository;
     private final OrganizationRestClient organizationRestClient;
 
 
-    public ManagerServiceImpl(ManagerRepository managerRepository, OrganizationRestClient organizationRestClient){
+    public ManagerServiceImpl(ManagerRepository managerRepository, EmployeeRepository employeeRepository, OrganizationRestClient organizationRestClient){
         this.managerRepository = managerRepository;
+        this.employeeRepository = employeeRepository;
         this.organizationRestClient = organizationRestClient;
     }
 
     @Override
-    public List<Manager> listManager() {
-        List<Manager> managers = new ArrayList<>();
-        managerRepository.findAll().forEach(manager -> {
-            manager.setJob(organizationRestClient.findByJob(manager.getJobID()));
-            manager.setDepartment(organizationRestClient.findByDepartment(manager.getDepartmentID()));
-            managers.add(manager);
+    public List<Employee> listManager() {
+        List<Employee> managers = new ArrayList<>();
+        employeeRepository.findAll().forEach(employee -> {
+            for(Manager manager: managerRepository.findAll()){
+                if(employee.getRegistrationNumber().equals(manager.getRegistrationNumber())){
+                    employee.setJob(organizationRestClient.findByJob(employee.getJobID()));
+                    employee.setDepartment(organizationRestClient.findByDepartment(employee.getDepartmentID()));
+                    managers.add(employee);
+                }
+            }
         });
         return managers;
     }
 
 
     @Override
-    public Manager find(Long id) {
-        Manager manager = managerRepository.findById(id).orElse(null);
+    public Employee find(Long id) {
+        AtomicBoolean isExist = new AtomicBoolean(false);
+        Employee manager = employeeRepository.findById(id).orElse(null);
         if(manager != null){
-            manager.setJob(organizationRestClient.findByJob(manager.getJobID()));
-            manager.setDepartment(organizationRestClient.findByDepartment(manager.getDepartmentID()));
+            managerRepository.findAll().forEach(manager1 ->{
+                if(manager1.getRegistrationNumber().equals(manager.getRegistrationNumber())){
+                    manager.setJob(organizationRestClient.findByJob(manager.getJobID()));
+                    manager.setDepartment(organizationRestClient.findByDepartment(manager.getDepartmentID()));
+                    isExist.set(true);
+                }
+            });
         }
-        return manager;
+        if(isExist.get())
+            return manager;
+        return null;
     }
 
     @Override
-    public Manager save(Manager manager) {
-        Manager managerSaved = managerRepository.save(manager);
-        managerSaved.setJob(organizationRestClient.findByJob(manager.getJobID()));
-        managerSaved.setDepartment(organizationRestClient.findByDepartment(manager.getDepartmentID()));
-        return managerSaved;
+    public Employee save(Employee employee) {
+        String registrationNumber = UUID.randomUUID().toString();
+        managerRepository.save(new Manager(null,registrationNumber,null));
+        employee.setJob(organizationRestClient.findByJob(employee.getJobID()));
+        employee.setDepartment(organizationRestClient.findByDepartment(employee.getDepartmentID()));
+
+        return employeeRepository.save(employee);
     }
 
     @Override
-    public Manager update(Manager manager) {
-        Manager managerUpdated = managerRepository.save(manager);
-        managerUpdated.setJob(organizationRestClient.findByJob(manager.getJobID()));
-        managerUpdated.setDepartment(organizationRestClient.findByDepartment(manager.getDepartmentID()));
-        return managerUpdated;
+    public Employee update(Employee employee) {
+        employee.setJob(organizationRestClient.findByJob(employee.getJobID()));
+        employee.setDepartment(organizationRestClient.findByDepartment(employee.getDepartmentID()));
+        return employeeRepository.save(employee);
     }
 
     @Override
     public void delete(Long id) {
-        managerRepository.deleteById(id);
-    }
+        Employee employee = employeeRepository.findById(id).get();
+        Manager manager = managerRepository.findAll().stream().filter(manager1 -> manager1.getRegistrationNumber().equals(employee.getRegistrationNumber())).findAny().get();
+        employeeRepository.delete(employee);
+        managerRepository.delete(manager);    }
 
     @Override
-    public List<Manager> findByJob(Long id) {
-        Job job = organizationRestClient.findByJob(id);
-        List<Manager> managers ;
-        managers = managerRepository.findAll().stream().filter(manager -> job.getId()==manager.getJobID()).toList();
-        managers.forEach(manager -> {manager.setJob(job);
-            manager.setDepartment(organizationRestClient.findByDepartment(manager.getDepartmentID()));});
+    public List<Employee> findByJob(Long id) {
+        List<Employee> managers  = new ArrayList<>();
+        employeeRepository.findAll().forEach(employee -> {
+            for (Manager manager : managerRepository.findAll()) {
+                if (manager.getRegistrationNumber().equals(employee.getRegistrationNumber()))
+                    if (employee.getJobID().equals(id)) {
+                        employee.setJob(organizationRestClient.findByJob(id));
+                        employee.setDepartment(organizationRestClient.findByDepartment(employee.getDepartmentID()));
+                        managers.add(employee);
+                    }
+            }
+        });
         return managers;
     }
 
     @Override
-    public List<Manager>  findByDepartment(Long id) {
-        Department department = organizationRestClient.findByDepartment(id);
-        List<Manager> managers;
-        managers = managerRepository.findAll().stream().filter(manager -> department.getId()==manager.getDepartmentID()).toList();
-        managers.forEach(manager -> {manager.setDepartment(department);
-            manager.setJob(organizationRestClient.findByJob(manager.getJobID()));
+    public List<Employee>  findByDepartment(Long id) {
+        List<Employee> managers = new ArrayList<>();
+        employeeRepository.findAll().forEach(employee -> {
+            for(Manager manager: managerRepository.findAll()){
+                if(employee.getRegistrationNumber().equals(manager.getRegistrationNumber()))
+                    if(employee.getDepartmentID().equals(id)){
+                        employee.setJob(organizationRestClient.findByJob(id));
+                        employee.setDepartment(organizationRestClient.findByDepartment(employee.getDepartmentID()));
+                        managers.add(employee);
+                    }
+            }
         });
         return managers;
     }

@@ -1,5 +1,6 @@
 package ma.suptech.MShuman.API;
 
+import ma.suptech.MShuman.models.Employee;
 import ma.suptech.MShuman.models.HumanResourceManager;
 import ma.suptech.MShuman.services.HumanResourceManagerService;
 import org.springframework.web.bind.annotation.*;
@@ -15,30 +16,30 @@ public class HumanResourceManagerAPI {
     }
 
     @GetMapping("humanResourceManagers")
-    public List<HumanResourceManager> listHumanResourceManager(){
+    public List<Employee> listHumanResourceManager(){
         return humanResourceManagerService.listRH();
     }
 
 
     @GetMapping("humanResourceManagers/department/{id}")
-    public List<HumanResourceManager> findHumanResourceManagerByDepartment(@PathVariable(name="id") Long id){
+    public List<Employee> findHumanResourceManagerByDepartment(@PathVariable(name="id") Long id){
         return humanResourceManagerService.findByDepartment(id);
     }
 
 
 
     @GetMapping("humanResourceManagers/{id}")
-    public HumanResourceManager findManager(@PathVariable(name="id") Long id){
+    public Employee findManager(@PathVariable(name="id") Long id){
         return humanResourceManagerService.find(id);
     }
 
     @PostMapping("humanResourceManager")
-    public HumanResourceManager addManager(@RequestBody HumanResourceManager humanResourceManager){
+    public Employee addManager(@RequestBody Employee humanResourceManager){
         return humanResourceManagerService.save(humanResourceManager);
     }
 
     @PutMapping("humanResourceManager")
-    public HumanResourceManager updateManager(@RequestBody HumanResourceManager humanResourceManager){
+    public Employee updateManager(@RequestBody Employee humanResourceManager){
         return humanResourceManagerService.update(humanResourceManager);
     }
 

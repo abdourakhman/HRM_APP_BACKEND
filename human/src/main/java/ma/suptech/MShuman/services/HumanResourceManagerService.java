@@ -2,16 +2,16 @@ package ma.suptech.MShuman.services;
 
 
 
-import ma.suptech.MShuman.models.HumanResourceManager;
+import ma.suptech.MShuman.models.Employee;
 
 import java.util.List;
 
 public interface HumanResourceManagerService {
 
-    List<HumanResourceManager> listRH();
-    List<HumanResourceManager>  findByDepartment(Long id);
-    HumanResourceManager find(Long id);
-    HumanResourceManager save(HumanResourceManager humanResourceManager);
-    HumanResourceManager update(HumanResourceManager humanResourceManager);
+    List<Employee> listRH();
+    List<Employee>  findByDepartment(Long id);
+    Employee find(Long id);
+    Employee save(Employee employee);
+    Employee update(Employee employee);
     void delete(Long id);
 }

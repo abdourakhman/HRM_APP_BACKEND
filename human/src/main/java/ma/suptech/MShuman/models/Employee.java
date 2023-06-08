@@ -19,6 +19,7 @@ import java.time.LocalDate;
 public class Employee {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private String registrationNumber;
     private String name;
     private String firstName;
     private Gender gender;
