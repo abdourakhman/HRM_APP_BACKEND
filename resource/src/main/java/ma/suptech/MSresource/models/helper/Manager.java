@@ -12,6 +12,7 @@ import java.util.Collection;
 @Data @NoArgsConstructor @AllArgsConstructor
 public class Manager {
     private Long id;
+    private String registrationNumber;
     private String name;
     private String firstName;
     private Gender gender;

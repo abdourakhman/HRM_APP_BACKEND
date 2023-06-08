@@ -63,4 +63,5 @@ public class ScoreCardServiceImpl implements ScoreCardService {
     public void remove(Long id) {
         scoreCardRepository.deleteById(id);
     }
+
 }

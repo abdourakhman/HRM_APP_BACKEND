@@ -27,7 +27,12 @@ public class HumanResourceManagerServiceImpl implements HumanResourceManagerServ
     }
 
     @Override
-    public List<Employee> listRH() {
+    public List<HumanResourceManager> listRh() {
+        return humanResourceManagerRepository.findAll();
+    }
+
+    @Override
+    public List<Employee> listEmployeeRH() {
         List<Employee> humanResourceManagers = new ArrayList<>();
         employeeRepository.findAll()
                 .forEach(employee -> {
@@ -43,7 +48,7 @@ public class HumanResourceManagerServiceImpl implements HumanResourceManagerServ
 
 
     @Override
-    public Employee find(Long id) {
+    public Employee findEmployeeRh(Long id) {
         AtomicBoolean isExist = new AtomicBoolean(false);
         Employee humanResourceManager = employeeRepository.findById(id).orElse(null);
         if(humanResourceManager != null){
@@ -101,5 +106,10 @@ public class HumanResourceManagerServiceImpl implements HumanResourceManagerServ
                     }
                 });
         return humanResourceManagers;
+    }
+
+    @Override
+    public HumanResourceManager findRh(Long idRh) {
+        return humanResourceManagerRepository.findById(idRh).get();
     }
 }

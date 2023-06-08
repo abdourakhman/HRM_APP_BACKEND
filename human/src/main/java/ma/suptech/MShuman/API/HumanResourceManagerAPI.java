@@ -14,10 +14,14 @@ public class HumanResourceManagerAPI {
     public HumanResourceManagerAPI(HumanResourceManagerService humanResourceManagerService){
         this.humanResourceManagerService = humanResourceManagerService;
     }
-
     @GetMapping("humanResourceManagers")
-    public List<Employee> listHumanResourceManager(){
-        return humanResourceManagerService.listRH();
+    public List<HumanResourceManager> listHumanResourceManager(){
+        return humanResourceManagerService.listRh();
+    }
+
+    @GetMapping("employees/humanResourceManagers")
+    public List<Employee> listEmployeeHumanResourceManager(){
+        return humanResourceManagerService.listEmployeeRH();
     }
 
 
@@ -29,8 +33,12 @@ public class HumanResourceManagerAPI {
 
 
     @GetMapping("humanResourceManagers/{id}")
-    public Employee findManager(@PathVariable(name="id") Long id){
-        return humanResourceManagerService.find(id);
+    public Employee findEmployeeRh(@PathVariable(name="id") Long id){
+        return humanResourceManagerService.findEmployeeRh(id);
+    }
+    @GetMapping("employees/humanResourceManagers/{id}")
+    public HumanResourceManager findRh(@PathVariable(name="id") Long id){
+        return humanResourceManagerService.findRh(id);
     }
 
     @PostMapping("humanResourceManager")

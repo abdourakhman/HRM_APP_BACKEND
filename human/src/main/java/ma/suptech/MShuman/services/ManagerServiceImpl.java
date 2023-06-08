@@ -27,7 +27,12 @@ public class ManagerServiceImpl implements ManagerService {
     }
 
     @Override
-    public List<Employee> listManager() {
+    public List<Manager> listManager() {
+        return managerRepository.findAll();
+    }
+
+    @Override
+    public List<Employee> listEmployeeManager() {
         List<Employee> managers = new ArrayList<>();
         employeeRepository.findAll().forEach(employee -> {
             for(Manager manager: managerRepository.findAll()){
@@ -43,7 +48,7 @@ public class ManagerServiceImpl implements ManagerService {
 
 
     @Override
-    public Employee find(Long id) {
+    public Employee findEmployeeManager(Long id) {
         AtomicBoolean isExist = new AtomicBoolean(false);
         Employee manager = employeeRepository.findById(id).orElse(null);
         if(manager != null){
@@ -58,6 +63,11 @@ public class ManagerServiceImpl implements ManagerService {
         if(isExist.get())
             return manager;
         return null;
+    }
+
+    @Override
+    public Manager findManager(Long idManager) {
+        return managerRepository.findById(idManager).get();
     }
 
     @Override

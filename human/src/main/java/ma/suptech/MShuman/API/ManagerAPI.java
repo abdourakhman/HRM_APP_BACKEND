@@ -1,6 +1,7 @@
 package ma.suptech.MShuman.API;
 
 import ma.suptech.MShuman.models.Employee;
+import ma.suptech.MShuman.models.Manager;
 import ma.suptech.MShuman.services.ManagerService;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,10 +14,13 @@ public class ManagerAPI {
     public ManagerAPI(ManagerService managerService){
         this.managerService = managerService;
     }
-
     @GetMapping("managers")
-    public List<Employee> listManager(){
+    public List<Manager> listManager(){
         return managerService.listManager();
+    }
+    @GetMapping("employees/managers")
+    public List<Employee> listEmployeeManager(){
+        return managerService.listEmployeeManager();
     }
 
 
@@ -32,10 +36,13 @@ public class ManagerAPI {
 
 
     @GetMapping("managers/{id}")
-    public Employee findManager(@PathVariable(name="id") Long id){
-        return managerService.find(id);
+    public Manager findManager(@PathVariable(name="id") Long id){
+        return managerService.findManager(id);
     }
-
+    @GetMapping("employees/humanResourceManagers/{id}")
+    public Employee findEmployeeManager(@PathVariable(name="id") Long id){
+        return managerService.findEmployeeManager(id);
+    }
     @PostMapping("manager")
     public Employee addManager(@RequestBody Employee manager){
         return managerService.save(manager);

@@ -11,6 +11,7 @@ import java.time.LocalDate;
 @Data @NoArgsConstructor @AllArgsConstructor
 public class Employee {
     private Long id;
+    private String registrationNumber;
     private String name;
     private String firstName;
     private Gender gender;
