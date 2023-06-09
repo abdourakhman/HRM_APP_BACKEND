@@ -34,12 +34,12 @@ public class ManagerAPI {
         return managerService.findByJob(id);
     }
 
-
     @GetMapping("managers/{id}")
     public Manager findManager(@PathVariable(name="id") Long id){
         return managerService.findManager(id);
     }
-    @GetMapping("employees/humanResourceManagers/{id}")
+
+    @GetMapping("employees/managers/{id}")
     public Employee findEmployeeManager(@PathVariable(name="id") Long id){
         return managerService.findEmployeeManager(id);
     }

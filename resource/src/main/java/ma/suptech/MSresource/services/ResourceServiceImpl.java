@@ -124,16 +124,8 @@ public class ResourceServiceImpl implements ResourceService {
             if(contract.getStatus().equals(Status.REVOKED))
                 contract.setEnd(null);
             contract.setEmployee(employee);
-            List<HumanResourceManager> humanResourceManagers = new ArrayList<>();
-            humanRestClient.listRh().forEach(rh ->{
-                for (Employee e: humanRestClient.listEmployee()){
-                    if(e.getRegistrationNumber().equals(rh.getRegistrationNumber()))
-                        if(e.getDepartmentID().equals(employee.getDepartmentID()))
-                            humanResourceManagers.add(rh);
-                }
-            });
-            contract.setHumanResourceManager(humanResourceManagers.get(new Random().nextInt(humanResourceManagers.size())));
             contract.setEmployeeID(employee.getId());
+            contract.setHumanResourceManager(humanRestClient.listRh().get(new Random().nextInt(humanRestClient.listRh().size())));
             contract.setHumanResourceManagerID(contract.getHumanResourceManager().getId());
             contractRepository.save(contract);
         }
@@ -157,21 +149,22 @@ public class ResourceServiceImpl implements ResourceService {
 
     @Override
     public void initGoalSet() {
-        for(int i = 0; i < projectRepository.findAll().size(); i++){
-            List<Employee> employees = humanRestClient.listEmployee();
-            humanRestClient.listEmployee().forEach(employee -> {
-                for(Manager manager: humanRestClient.listManager())
-                    if(employee.getRegistrationNumber().equals(manager.getRegistrationNumber()))
-                            employees.remove(employee);
+        List<Employee> employees = humanRestClient.listEmployee();
+        humanRestClient.listEmployee().forEach(employee -> {
+            for(Manager manager: humanRestClient.listManager())
+                if(employee.getRegistrationNumber().equals(manager.getRegistrationNumber()))
+                    employees.remove(employee);
 
-                for(HumanResourceManager rh : humanRestClient.listRh())
-                    if(rh.getRegistrationNumber().equals(employee.getRegistrationNumber()))
-                        employees.remove(employee);
+            for(HumanResourceManager rh : humanRestClient.listRh())
+                if(rh.getRegistrationNumber().equals(employee.getRegistrationNumber()))
+                    employees.remove(employee);
 
-            });
+        });
+        int i = 0;
+        for(Project project: projectRepository.findAll()){
             GoalSet goalSet = new GoalSet();
-            goalSet.setTitle(goalsets.get(i));
-            goalSet.setProject(projectRepository.findById((long)i).get());
+            goalSet.setTitle(goalsets.get(i++));
+            goalSet.setProject(project);
             goalSet.setTargetDate(goalSet.getProject().getStart().plusMonths(new Random().nextInt(3)));
             goalSet.setEmployee(employees.get(new Random().nextInt(employees.size())));
             goalSet.setEmployeeID(goalSet.getEmployee().getId());
@@ -185,9 +178,8 @@ public class ResourceServiceImpl implements ResourceService {
             TimeSheet timeSheet = new TimeSheet();
             timeSheet.setCreatedAt(LocalDate.now());
             timeSheet.setAbsence(Arrays.asList(Absence.DISEASE,Absence.FORMATION,Absence.HOLIDAYS,Absence.OTHER,null).get(new Random().nextInt(4)));
-            if(timeSheet.getAbsence() != null)
-                timeSheet.setAbsence(null);
-            else
+           timeSheet.setHoursWorked(null);
+            if(timeSheet.getAbsence() == null)
                 timeSheet.setHoursWorked(Duration.ofHours(new Random().nextInt(5,8)));
             timeSheet.setEmployeeID(employee.getId());
             timeSheet.setEmployee(employee);
@@ -206,6 +198,7 @@ public class ResourceServiceImpl implements ResourceService {
                     ma.suptech.MSresource.enumerations.timeOffRequest.Type.FORMATION,
                     ma.suptech.MSresource.enumerations.timeOffRequest.Type.OTHER
                     ).get(new Random().nextInt(5)));
+            timeOffRequest.setRequestDate(LocalDate.now().minusMonths(new Random().nextInt(2)));
             if(timeOffRequest.getType().equals(ma.suptech.MSresource.enumerations.timeOffRequest.Type.MATERNITY))
                 timeOffRequest.setRequestStatus(ma.suptech.MSresource.enumerations.timeOffRequest.Status.ACCEPTED);
             else
@@ -215,24 +208,17 @@ public class ResourceServiceImpl implements ResourceService {
                         ma.suptech.MSresource.enumerations.timeOffRequest.Status.REJECTED
                 ).get(new Random().nextInt(3)));
             timeOffRequest.setDesiredStartDate(LocalDate.now().plusMonths(new Random().nextInt(2)));
+
             if(timeOffRequest.getType().equals(ma.suptech.MSresource.enumerations.timeOffRequest.Type.MATERNITY))
                 timeOffRequest.setDesiredEndDate(timeOffRequest.getDesiredStartDate().plusMonths(3));
             else
                 timeOffRequest.setDesiredEndDate(timeOffRequest.getDesiredStartDate().plusWeeks(new Random().nextInt(1,4)));
+
             timeOffRequest.setEmployee(employee);
             timeOffRequest.setEmployeeID(employee.getId());
 
-            List<HumanResourceManager> humanResourceManagers = new ArrayList<>();
-            humanRestClient.listRh().forEach(rh ->{
-                for(Employee employee1: humanRestClient.listEmployee())
-                    if(employee1.getRegistrationNumber().equals(rh.getRegistrationNumber()))
-                        if(employee1.getDepartmentID().equals(employee.getDepartmentID()))
-                            humanResourceManagers.add(rh);
-            });
-            if(humanResourceManagers.size()>0) {
-                timeOffRequest.setHumanResourceManager(humanResourceManagers.get(new Random().nextInt(humanResourceManagers.size())));
-                timeOffRequest.setHumanResourceManagerID(timeOffRequest.getHumanResourceManager().getId());
-            }
+            timeOffRequest.setHumanResourceManager(humanRestClient.listRh().get(new Random().nextInt(humanRestClient.listRh().size())));
+            timeOffRequest.setHumanResourceManagerID(timeOffRequest.getHumanResourceManager().getId());
             timeOffRequestRepository.save(timeOffRequest);
         }
     }

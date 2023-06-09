@@ -37,10 +37,11 @@ public class HumanResourceManagerServiceImpl implements HumanResourceManagerServ
         employeeRepository.findAll()
                 .forEach(employee -> {
                     for (HumanResourceManager rh : humanResourceManagerRepository.findAll()){
-                        if(rh.getRegistrationNumber().equals(employee.getRegistrationNumber()))
+                        if(rh.getRegistrationNumber().equals(employee.getRegistrationNumber())){
                             employee.setJob(organizationRestClient.findByJob(employee.getJobID()));
                             employee.setDepartment(organizationRestClient.findByDepartment(employee.getDepartmentID()));
-                        humanResourceManagers.add(employee);
+                            humanResourceManagers.add(employee);
+                        }
                     }
                 });
         return humanResourceManagers;

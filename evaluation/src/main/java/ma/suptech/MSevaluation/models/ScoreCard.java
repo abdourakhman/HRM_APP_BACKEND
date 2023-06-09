@@ -1,5 +1,6 @@
 package ma.suptech.MSevaluation.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.*;
@@ -22,6 +23,7 @@ public class ScoreCard {
     private String specificNotes;//sous forme d'une liste d'objet / A deserialiser
     private String recommendations;
     private Long employeeID;
+    @JsonManagedReference
     @ManyToOne
     private Evaluation evaluation;
     @Transient

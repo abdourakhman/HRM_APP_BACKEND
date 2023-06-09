@@ -1,5 +1,7 @@
 package ma.suptech.MSresource.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -19,6 +21,7 @@ public class Project {
     private String description;
     private LocalDate start;
     private LocalDate end;
+    @JsonBackReference
     @OneToMany(mappedBy = "project")
     private Collection<GoalSet> goalSets;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)

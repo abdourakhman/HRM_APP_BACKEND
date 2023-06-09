@@ -30,7 +30,6 @@ public class Employee {
     private LocalDate hiringDate;
     private Status status;
     private String photoUrl;
-
     @JsonManagedReference
     @ManyToOne
     private Manager manager;

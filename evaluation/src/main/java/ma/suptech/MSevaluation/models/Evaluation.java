@@ -1,5 +1,6 @@
 package ma.suptech.MSevaluation.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,6 +16,7 @@ public class Evaluation {
     private Long id;
     private LocalDate evaluationDate;
     private String goalSet; //objective
+    @JsonBackReference
     @OneToMany(mappedBy = "evaluation")
     private Collection<ScoreCard> scoreCards;
 }

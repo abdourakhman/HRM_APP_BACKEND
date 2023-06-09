@@ -10,7 +10,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 public class HumanResourceManagerAPI {
+
     private final HumanResourceManagerService humanResourceManagerService;
+
     public HumanResourceManagerAPI(HumanResourceManagerService humanResourceManagerService){
         this.humanResourceManagerService = humanResourceManagerService;
     }
@@ -29,8 +31,6 @@ public class HumanResourceManagerAPI {
     public List<Employee> findHumanResourceManagerByDepartment(@PathVariable(name="id") Long id){
         return humanResourceManagerService.findByDepartment(id);
     }
-
-
 
     @GetMapping("humanResourceManagers/{id}")
     public Employee findEmployeeRh(@PathVariable(name="id") Long id){
