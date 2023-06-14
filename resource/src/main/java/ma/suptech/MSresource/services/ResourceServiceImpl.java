@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -121,8 +120,6 @@ public class ResourceServiceImpl implements ResourceService {
             contract.setStatus(Arrays.asList(Status.ACTIVE,Status.REVOKED,Status.EXPIRED).get(new Random().nextInt(3)));
             if (contract.getStatus().equals(Status.EXPIRED))
                 contract.setEnd(LocalDate.now().minusYears(new Random().nextInt(2)).minusMonths(new Random().nextInt(10)));
-            if(contract.getStatus().equals(Status.REVOKED))
-                contract.setEnd(null);
             contract.setEmployee(employee);
             contract.setEmployeeID(employee.getId());
             contract.setHumanResourceManager(humanRestClient.listRh().get(new Random().nextInt(humanRestClient.listRh().size())));
