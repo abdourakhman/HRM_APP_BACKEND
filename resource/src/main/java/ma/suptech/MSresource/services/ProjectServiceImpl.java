@@ -6,6 +6,7 @@ import ma.suptech.MSresource.models.helper.Manager;
 import ma.suptech.MSresource.repositories.ProjectRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -56,6 +57,12 @@ public class ProjectServiceImpl implements ProjectService {
                     project.setManager(humanRestClient.findManager(project.getManagerID()));
                     return project;
                 }).collect(Collectors.toList());
+    }
+
+    @Override
+    public int getNumberOnGoingProject() {
+        return projectRepository.findAll()
+                .stream().filter(project -> project.getEnd().isAfter(LocalDate.now())).toList().size();
     }
 
     @Override

@@ -67,6 +67,17 @@ public class ContractServiceImpl implements ContractService {
     }
 
     @Override
+    public float getAverageSalary() {
+        float sumSalary = 0;
+        int numberOfcontract = 0;
+        for (Contract contract : contractRepository.findAll()){
+            sumSalary+= contract.getRemuneration();
+            numberOfcontract++;
+        }
+        return sumSalary/numberOfcontract;
+    }
+
+    @Override
     public void remove(Long id) {
         contractRepository.deleteById(id);
     }

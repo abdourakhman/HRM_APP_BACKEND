@@ -10,6 +10,6 @@ public interface ProjectService {
     Project findOne (Long id);
     List<Project> findByManager (Long  idManager);
     List<Project> findAll ();
-
+    int getNumberOnGoingProject();
     void delete(Long id );
 }

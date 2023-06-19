@@ -42,6 +42,11 @@ public class ContractApi {
         return contractService.findAll();
     }
 
+    @GetMapping("/contracts/average/salary")
+    public float getAverageSalary(){
+        return contractService.getAverageSalary();
+    }
+
     @DeleteMapping("/contract/{id}")
     public void remove(@PathVariable Long id){
         contractService.remove(id);

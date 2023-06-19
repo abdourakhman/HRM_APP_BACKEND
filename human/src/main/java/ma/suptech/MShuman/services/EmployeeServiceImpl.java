@@ -1,14 +1,18 @@
 package ma.suptech.MShuman.services;
 
 import ma.suptech.MShuman.client.OrganizationRestClient;
+import ma.suptech.MShuman.enumerations.Gender;
 import ma.suptech.MShuman.models.Employee;
 import ma.suptech.MShuman.models.help.Department;
 import ma.suptech.MShuman.models.help.Job;
 import ma.suptech.MShuman.repositories.EmployeeRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -96,4 +100,73 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employees;
     }
 
+    @Override
+    public Map<String,Integer> getNumberOfEmployeeByDepartment(){
+        Map<String,Integer> numberEmployeeByDepartment = new HashMap<>();
+        this.organizationRestClient.listDepartment()
+                .forEach(department -> {
+                    int numberEmployee = 0;
+                    numberEmployeeByDepartment.put(department.getName(),numberEmployee);
+
+                    for (Employee e : this.employeeRepository.findAll()){
+                        if (e.getDepartmentID().equals(department.getId())){
+                            numberEmployee++;
+                            numberEmployeeByDepartment.replace(department.getName(),numberEmployee);
+                        }
+                    }
+                });
+        return numberEmployeeByDepartment;
+    }
+
+    @Override
+    public Map<String,Integer> getNumberOfEmployeeByJob(){
+        Map<String,Integer> numberEmployeeByJob = new HashMap<>();
+        this.organizationRestClient.listJob()
+                .forEach(job -> {
+                    int numberEmployee = 0;
+                    numberEmployeeByJob.put(job.getTitle(),numberEmployee);
+
+                    for (Employee e : this.employeeRepository.findAll()){
+                        if (e.getJobID().equals(job.getId())){
+                            numberEmployee++;
+                            numberEmployeeByJob.replace(job.getTitle(),numberEmployee);
+                        }
+                    }
+                });
+        return numberEmployeeByJob;
+    }
+
+    @Override
+    public Map<String,Integer> getNumberOfEmployeeByGender(){
+        Map<String,Integer> numberEmployeeByGender = new HashMap<>();
+        int numberOfMan = 0 , numberOfWoman = 0;
+        numberEmployeeByGender.put("Male",numberOfMan);
+        numberEmployeeByGender.put("Female",numberOfWoman);
+        for (Employee e : this.employeeRepository.findAll()){
+            if (e.getGender().equals(Gender.MALE)){
+                numberOfMan++;
+                numberEmployeeByGender.replace("Male",numberOfMan);
+            }
+            else{
+                numberOfWoman++;
+                numberEmployeeByGender.replace("Female",numberOfWoman);
+            }
+        }
+        return numberEmployeeByGender;
+    }
+
+    @Override
+    public Long getTotalEmployee() {
+        return employeeRepository.count();
+    }
+
+    @Override
+    public int getAverageAge(){
+        int sumAge = 0, numberOfeEmployee = 0;
+        for (Employee e : this.employeeRepository.findAll()){
+            sumAge+= LocalDate.now().getYear() - e.getBirthday().getYear();
+            numberOfeEmployee++;
+        }
+        return Math.round(sumAge/numberOfeEmployee);
+    }
 }

@@ -26,14 +26,14 @@ public class ActorsServiceImpl implements ActorsService {
     private final ManagerRepository managerRepository;
     private final EmployeeRepository employeeRepository;
     List<String> lastNames = Stream.of(
-            "Jackson", "Ndiaye", "Dubois", "Sarr",
-            "Garcia", "Smith", "Lopez", "Chen",
+            "Jackson", "Ndiaye", "Dubois", "Sarr","Aziza","Alaoui",
+            "Garcia", "Smith", "Lopez", "Diagne",
             "Müller", "González", "Zerktouni",
-            "Kassidh","Fayette","Lawson"
+            "Kassidh","Fayette","Lawson","Job"
     ).toList();
     List<String> firstNames = Stream.of(
-            "Emmanuel", "Liam", "Olivier", "Noah", "Sandrine",
-            "Isabella", "Sophia", "Mia", "Charlotte", "Sylvie",
+            "Emmanuel", "Liam", "Olivier", "Noah", "Sandrine","Shaîma","Samira","Soukeyna",
+            "Isabella", "Sophia", "Mia", "Charle", "Sylvie","Sophie",
             "Harper", "Will alexander", "El hadji", "Imêne", "Salma",
             "James", "Benjamin", "Lucas", "Henry", "Alexander",
             "Abdourahmane","Khadija","Fayçal","Hamza","Eric"
@@ -129,11 +129,11 @@ public class ActorsServiceImpl implements ActorsService {
     @Override
     public void initEmployee() {
         telephoneNumbers.clear();
-        while (telephoneNumbers.size() < 50) {
+        while (telephoneNumbers.size() < 120) {
             int number = generatePhoneNumber();
             telephoneNumbers.add(number);
         }
-        for (int i=0; i<50;i++){
+        for (int i=0; i<120;i++){
             String registrationNumber = UUID.randomUUID().toString();
             Employee employee = new Employee();
             employee.setRegistrationNumber(registrationNumber);

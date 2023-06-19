@@ -5,6 +5,7 @@ import ma.suptech.MShuman.services.EmployeeService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
@@ -53,5 +54,26 @@ public class EmployeeAPI {
     @DeleteMapping("employee/{id}")
     public void removeEmployee(@PathVariable(name="id") Long id){
         employeeService.delete(id);
+    }
+
+    @GetMapping("numberOfEmployees/department")
+    public Map<String,Integer> getNumberEmployeeByDepartment(){
+        return employeeService.getNumberOfEmployeeByDepartment();
+    }
+    @GetMapping("numberOfEmployees")
+    public Long getTotalEmployees(){
+        return employeeService.getTotalEmployee();
+    }
+    @GetMapping("numberOfEmployees/job")
+    public Map<String,Integer> getNumberEmployeeByJob(){
+        return employeeService.getNumberOfEmployeeByJob();
+    }
+    @GetMapping("numberOfEmployees/gender")
+    public Map<String,Integer> getNumberEmployeeByGender(){
+        return employeeService.getNumberOfEmployeeByGender();
+    }
+    @GetMapping("employees/average/age")
+    public int getAverageAgeEmployees(){
+        return employeeService.getAverageAge();
     }
 }
