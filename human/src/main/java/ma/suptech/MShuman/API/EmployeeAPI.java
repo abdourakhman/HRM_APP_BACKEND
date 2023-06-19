@@ -64,6 +64,10 @@ public class EmployeeAPI {
     public Long getTotalEmployees(){
         return employeeService.getTotalEmployee();
     }
+    @GetMapping("numberOfEmployees/active")
+    public int getNumberOfActiveEmployees(){
+        return employeeService.getNumberOfActiveWorker();
+    }
     @GetMapping("numberOfEmployees/job")
     public Map<String,Integer> getNumberEmployeeByJob(){
         return employeeService.getNumberOfEmployeeByJob();

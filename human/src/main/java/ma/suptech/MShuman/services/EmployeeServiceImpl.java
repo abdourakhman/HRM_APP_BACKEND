@@ -2,6 +2,7 @@ package ma.suptech.MShuman.services;
 
 import ma.suptech.MShuman.client.OrganizationRestClient;
 import ma.suptech.MShuman.enumerations.Gender;
+import ma.suptech.MShuman.enumerations.Status;
 import ma.suptech.MShuman.models.Employee;
 import ma.suptech.MShuman.models.help.Department;
 import ma.suptech.MShuman.models.help.Job;
@@ -158,6 +159,12 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Long getTotalEmployee() {
         return employeeRepository.count();
+    }
+
+    @Override
+    public int getNumberOfActiveWorker() {
+        return employeeRepository.findAll().stream()
+                .filter(employee -> employee.getStatus().equals(Status.ACTIVE)).toList().size();
     }
 
     @Override

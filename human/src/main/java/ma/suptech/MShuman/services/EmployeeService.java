@@ -16,6 +16,7 @@ public interface EmployeeService {
     Map<String,Integer> getNumberOfEmployeeByDepartment();
     Map<String,Integer> getNumberOfEmployeeByGender();
     Long getTotalEmployee();
+    int getNumberOfActiveWorker();
     int getAverageAge();
     Employee find(Long id);
     Employee save(Employee employee);
