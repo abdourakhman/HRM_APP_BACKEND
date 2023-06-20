@@ -40,8 +40,8 @@ public class EmployeeAPI {
     public Employee findEmployee(@PathVariable(name="id") Long id){
         return employeeService.find(id);
     }
-    @GetMapping("employees/{registrationNumber}")
-    public Employee findEmployee(@PathVariable(name="registrationNumber") String registrationNumber){
+    @GetMapping("employee/{registrationNumber}")
+    public Employee findEmployeeByrRegistrationNumber(@PathVariable String registrationNumber){
         return employeeService.findEmployeeByRegistrationNumber(registrationNumber);
     }
 
