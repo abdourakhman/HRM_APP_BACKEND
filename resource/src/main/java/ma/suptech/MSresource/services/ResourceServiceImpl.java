@@ -174,9 +174,9 @@ public class ResourceServiceImpl implements ResourceService {
         for (Employee employee: humanRestClient.listEmployee()) {
             TimeSheet timeSheet = new TimeSheet();
             timeSheet.setCreatedAt(LocalDate.now());
-            timeSheet.setAbsence(Arrays.asList(Absence.DISEASE,Absence.FORMATION,Absence.HOLIDAYS,Absence.OTHER,null).get(new Random().nextInt(4)));
+            timeSheet.setAbsence(Arrays.asList(Absence.DISEASE,Absence.FORMATION,Absence.HOLIDAYS,Absence.OTHER,Absence.NULL).get(new Random().nextInt(4)));
            timeSheet.setHoursWorked(null);
-            if(timeSheet.getAbsence() == null)
+            if(timeSheet.getAbsence() == Absence.NULL)
                 timeSheet.setHoursWorked(Duration.ofHours(new Random().nextInt(5,8)));
             timeSheet.setEmployeeID(employee.getId());
             timeSheet.setEmployee(employee);
