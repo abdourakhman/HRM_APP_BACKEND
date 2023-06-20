@@ -29,6 +29,10 @@ public class ProjectAPI {
         return projectService.findOne(id);
     }
 
+    @GetMapping("projects/ongoing")
+    public int getNumberOfOnGoingProject() {
+        return projectService.getNumberOnGoingProject();
+    }
     @GetMapping("projects")
     public List<Project> listProject(){
         return projectService.findAll();

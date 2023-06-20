@@ -12,5 +12,6 @@ public interface ContractService {
     Contract find(Long id);
     List<Contract> findByEmployee(Long id);
     List<Contract>  findAll();
+    float getAverageSalary();
     void remove(Long id);
 }
