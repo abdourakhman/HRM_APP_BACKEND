@@ -19,6 +19,7 @@ public interface EmployeeService {
     int getNumberOfActiveWorker();
     int getAverageAge();
     Employee find(Long id);
+    Employee findEmployeeByRegistrationNumber(String registrationNumber);
     Employee save(Employee employee);
     Employee update(Employee employee);
     void delete(Long id);

@@ -49,6 +49,15 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    public Employee findEmployeeByRegistrationNumber(String registrationNumber) {
+        for(Employee e : employeeRepository.findAll()){
+            if(e.getRegistrationNumber().equals(registrationNumber))
+                return e;
+        }
+        return null;
+    }
+
+    @Override
     public Employee save(Employee employee) {
         Employee employeeSaved = employeeRepository.save(employee);
         employeeSaved.setJob(organizationRestClient.findByJob(employee.getJobID()));
