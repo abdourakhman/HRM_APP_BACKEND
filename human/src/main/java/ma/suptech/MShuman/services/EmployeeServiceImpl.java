@@ -186,6 +186,6 @@ public class EmployeeServiceImpl implements EmployeeService {
             sumAge+= LocalDate.now().getYear() - e.getBirthday().getYear();
             numberOfeEmployee++;
         }
-        return Math.round(sumAge/numberOfeEmployee);
+        return sumAge/numberOfeEmployee;
     }
 }
