@@ -6,6 +6,7 @@ import ma.suptech.MSresource.services.ContractService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
@@ -35,6 +36,11 @@ public class ContractApi {
     @GetMapping("/contracts/employee/{id}")
     public List<Contract> findEmployeeContract(@PathVariable Long id){
         return contractService.findByEmployee(id);
+    }
+
+    @GetMapping("/contracts/distinct")
+    public Map<String,Integer> getNumberDistinctContract(){
+        return contractService.getNumberOfDistinctContract();
     }
 
     @GetMapping("/contracts")
