@@ -111,7 +111,7 @@ public class ResourceServiceImpl implements ResourceService {
         for(Employee employee: humanRestClient.listEmployee()){
             Contract contract = new Contract();
             contract.setStart(employee.getHiringDate());
-            contract.setType(Arrays.asList(Type.CDD,Type.CDI,Type.ALTERNATION).get(new Random().nextInt(3)));
+            contract.setType(Arrays.asList(Type.CDD,Type.CDD,Type.CDI,Type.ALTERNATION).get(new Random().nextInt(4)));
             if(contract.getType().equals(Type.CDI))
                 contract.setEnd(null);
             else
