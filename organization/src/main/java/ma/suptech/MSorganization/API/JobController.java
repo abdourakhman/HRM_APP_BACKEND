@@ -16,6 +16,7 @@ public class JobController {
         this.jobService = jobService;
     }
     @PostMapping("/job")
+    @CrossOrigin(origins = "http://localhost:4200")
     public Job create(@RequestBody Job job){
         return jobService.create(job);
     }
