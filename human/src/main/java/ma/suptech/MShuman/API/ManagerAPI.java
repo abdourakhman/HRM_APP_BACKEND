@@ -14,10 +14,12 @@ public class ManagerAPI {
     public ManagerAPI(ManagerService managerService){
         this.managerService = managerService;
     }
+
     @GetMapping("managers")
     public List<Manager> listManager(){
         return managerService.listManager();
     }
+
     @GetMapping("employees/managers")
     public List<Employee> listEmployeeManager(){
         return managerService.listEmployeeManager();
@@ -37,6 +39,11 @@ public class ManagerAPI {
     @GetMapping("managers/{id}")
     public Manager findManager(@PathVariable(name="id") Long id){
         return managerService.findManager(id);
+    }
+
+    @GetMapping("manager/{registrationNumber}")
+    public Manager findManagerByRegistration(@PathVariable(name="registrationNumber") String registrationNumber){
+        return managerService.findManagerByRegistration(registrationNumber);
     }
 
     @GetMapping("employees/managers/{id}")

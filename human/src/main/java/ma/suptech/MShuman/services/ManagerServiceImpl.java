@@ -71,6 +71,16 @@ public class ManagerServiceImpl implements ManagerService {
     }
 
     @Override
+    public Manager findManagerByRegistration(String registration) {
+        for(Manager manager : managerRepository.findAll()){
+            if(manager.getRegistrationNumber().equals(registration)){
+                return manager;
+            }
+        }
+        return null;
+    }
+
+    @Override
     public Employee save(Employee employee) {
         String registrationNumber = UUID.randomUUID().toString();
         managerRepository.save(new Manager(null,registrationNumber,null));

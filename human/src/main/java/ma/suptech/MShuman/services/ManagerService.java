@@ -13,6 +13,7 @@ public interface ManagerService {
     List<Employee>  findByDepartment(Long id);
     Employee findEmployeeManager(Long idEmployee);
     Manager findManager(Long idManager);
+    Manager findManagerByRegistration(String registration);
     Employee save(Employee manager);
     Employee update(Employee manager);
     void delete(Long id);
