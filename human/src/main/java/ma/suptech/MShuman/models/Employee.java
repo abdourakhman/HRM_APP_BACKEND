@@ -1,6 +1,7 @@
 package ma.suptech.MShuman.models;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,7 +31,7 @@ public class Employee {
     private LocalDate hiringDate;
     private Status status;
     private String photoUrl;
-    @JsonManagedReference
+    @JsonProperty(access = JsonProperty.Access.READ_WRITE)
     @ManyToOne
     private Manager manager;
     private Long jobID;

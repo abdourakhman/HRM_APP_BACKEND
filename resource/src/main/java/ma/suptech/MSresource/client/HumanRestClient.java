@@ -27,8 +27,8 @@ public interface HumanRestClient {
     @GetMapping("api/employees/managers")
     List<Employee> listEmployeeManager();
 
-    @GetMapping("api/humanResourceManagers/{idRH}")
-    HumanResourceManager findHumanResourceManager(@PathVariable Long idRH);
+    @GetMapping("api/humanResourceManagers/{id}")
+    HumanResourceManager findHumanResourceManager(@PathVariable Long id);
     @GetMapping("api/employees/humanResourceManagers/{idEmployee}")
     Employee findEmployeeRh(@PathVariable Long idEmployee);
     @GetMapping("api/employees/humanResourceManagers")

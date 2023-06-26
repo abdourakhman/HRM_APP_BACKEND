@@ -32,11 +32,11 @@ public class HumanResourceManagerAPI {
         return humanResourceManagerService.findByDepartment(id);
     }
 
-    @GetMapping("humanResourceManagers/{id}")
+    @GetMapping("employees/humanResourceManagers/{id}")
     public Employee findEmployeeRh(@PathVariable(name="id") Long id){
         return humanResourceManagerService.findEmployeeRh(id);
     }
-    @GetMapping("employees/humanResourceManagers/{id}")
+    @GetMapping("humanResourceManagers/{id}")
     public HumanResourceManager findRh(@PathVariable(name="id") Long id){
         return humanResourceManagerService.findRh(id);
     }

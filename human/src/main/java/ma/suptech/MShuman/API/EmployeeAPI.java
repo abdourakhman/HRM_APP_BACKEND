@@ -6,9 +6,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
-
 @RestController
-@RequestMapping("/api")
+@RequestMapping( "/api")
 public class EmployeeAPI {
     private final EmployeeService employeeService;
     public EmployeeAPI(EmployeeService employeeService){
@@ -47,7 +46,11 @@ public class EmployeeAPI {
 
     @PostMapping("employee")
     public Employee addEmployee(@RequestBody Employee employee){
-        return employeeService.save(employee);
+        try {
+            return employeeService.save(employee);
+        }catch (RuntimeException r){
+            throw new RuntimeException(r.getMessage());
+        }
     }
 
     @PutMapping("employee")

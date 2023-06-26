@@ -111,6 +111,6 @@ public class HumanResourceManagerServiceImpl implements HumanResourceManagerServ
 
     @Override
     public HumanResourceManager findRh(Long idRh) {
-        return humanResourceManagerRepository.findById(idRh).get();
+        return humanResourceManagerRepository.findById(idRh).orElse(null);
     }
 }

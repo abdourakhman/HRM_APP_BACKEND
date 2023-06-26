@@ -18,42 +18,42 @@ public class ContractApi {
         this.contractService = contractService;
     }
 
-    @PostMapping("/contract")
+    @PostMapping("contract")
     public Contract save(@RequestBody Contract contract){
         return contractService.create(contract);
     }
 
-    @PutMapping("/contract")
+    @PutMapping("contract")
     public Contract update(@RequestBody Contract contract){
         return contractService.update(contract);
     }
 
-    @GetMapping("/contracts/{id}")
+    @GetMapping("contracts/{id}")
     public Contract find(@PathVariable Long id){
         return contractService.find(id);
     }
 
-    @GetMapping("/contracts/employee/{id}")
+    @GetMapping("contracts/employee/{id}")
     public List<Contract> findEmployeeContract(@PathVariable Long id){
         return contractService.findByEmployee(id);
     }
 
-    @GetMapping("/contracts/distinct")
+    @GetMapping("contracts/distinct")
     public Map<String,Integer> getNumberDistinctContract(){
         return contractService.getNumberOfDistinctContract();
     }
 
-    @GetMapping("/contracts")
+    @GetMapping("contracts")
     public List<Contract> getAllContract(){
         return contractService.findAll();
     }
 
-    @GetMapping("/contracts/average/salary")
+    @GetMapping("contracts/average/salary")
     public float getAverageSalary(){
         return contractService.getAverageSalary();
     }
 
-    @DeleteMapping("/contract/{id}")
+    @DeleteMapping("contract/{id}")
     public void remove(@PathVariable Long id){
         contractService.remove(id);
     }

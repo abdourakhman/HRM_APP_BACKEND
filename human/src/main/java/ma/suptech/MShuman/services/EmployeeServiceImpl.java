@@ -10,10 +10,7 @@ import ma.suptech.MShuman.repositories.EmployeeRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -62,6 +59,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee save(Employee employee) {
+        employee.setRegistrationNumber(UUID.randomUUID().toString());
+        employee.setHiringDate(LocalDate.now());
         Employee employeeSaved = employeeRepository.save(employee);
         employeeSaved.setJob(organizationRestClient.findByJob(employee.getJobID()));
         employeeSaved.setDepartment(organizationRestClient.findByDepartment(employee.getDepartmentID()));
