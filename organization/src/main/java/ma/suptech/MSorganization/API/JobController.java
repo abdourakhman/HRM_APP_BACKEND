@@ -17,7 +17,11 @@ public class JobController {
     }
     @PostMapping("/job")
     public Job create(@RequestBody Job job){
-        return jobService.create(job);
+        try{
+            return jobService.create(job);
+        }catch (RuntimeException e){
+            throw new RuntimeException(e.getMessage());
+        }
     }
 
     @PutMapping("/job")
