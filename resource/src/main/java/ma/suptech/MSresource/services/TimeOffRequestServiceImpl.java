@@ -1,6 +1,7 @@
 package ma.suptech.MSresource.services;
 
 import ma.suptech.MSresource.client.HumanRestClient;
+import ma.suptech.MSresource.enumerations.timeOffRequest.Status;
 import ma.suptech.MSresource.enumerations.timeOffRequest.Type;
 import ma.suptech.MSresource.models.TimeOffRequest;
 import ma.suptech.MSresource.models.helper.Employee;
@@ -77,6 +78,39 @@ public class TimeOffRequestServiceImpl implements TimeOffRequestService {
                     timeOffRequest.setHumanResourceManager(humanRestClient.findHumanResourceManager(timeOffRequest.getHumanResourceManagerID()));
                     return timeOffRequest;
                 }).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<TimeOffRequest> listTimeOffRequestPending() {
+        return timeOffRequestRepository.findAll().stream().filter(
+                timeOffRequest -> timeOffRequest.getRequestStatus().equals(Status.PENDING)
+        ).map(timeOffRequest -> {
+            timeOffRequest.setHumanResourceManager(humanRestClient.findHumanResourceManager(timeOffRequest.getHumanResourceManagerID()));
+            timeOffRequest.setEmployee(humanRestClient.findEmployee(timeOffRequest.getEmployeeID()));
+            return timeOffRequest;
+        }).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<TimeOffRequest> listTimeOffRequestAccepted() {
+        return timeOffRequestRepository.findAll().stream().filter(
+                timeOffRequest -> timeOffRequest.getRequestStatus().equals(Status.ACCEPTED)
+        ).map(timeOffRequest -> {
+            timeOffRequest.setHumanResourceManager(humanRestClient.findHumanResourceManager(timeOffRequest.getHumanResourceManagerID()));
+            timeOffRequest.setEmployee(humanRestClient.findEmployee(timeOffRequest.getEmployeeID()));
+            return timeOffRequest;
+        }).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<TimeOffRequest> listTimeOffRequestRejected() {
+        return timeOffRequestRepository.findAll().stream().filter(
+                timeOffRequest -> timeOffRequest.getRequestStatus().equals(Status.REJECTED)
+        ).map(timeOffRequest -> {
+            timeOffRequest.setHumanResourceManager(humanRestClient.findHumanResourceManager(timeOffRequest.getHumanResourceManagerID()));
+            timeOffRequest.setEmployee(humanRestClient.findEmployee(timeOffRequest.getEmployeeID()));
+            return timeOffRequest;
+        }).collect(Collectors.toList());
     }
 
     @Override

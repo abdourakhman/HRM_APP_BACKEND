@@ -13,6 +13,9 @@ public interface TimeOffRequestService {
     List<TimeOffRequest>list();
     List<TimeOffRequest>listTimeOffRequestByEmployee(Long id);
     List<TimeOffRequest>listTimeOffRequestByType(Type type);
+    List<TimeOffRequest>listTimeOffRequestPending();
+    List<TimeOffRequest>listTimeOffRequestAccepted();
+    List<TimeOffRequest>listTimeOffRequestRejected();
     TimeOffRequest find(Long id);
     void remove(Long id);
 

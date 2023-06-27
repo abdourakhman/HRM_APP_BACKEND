@@ -21,6 +21,20 @@ public class TimeOffRequestAPI {
         return timeOffRequestService.list();
     }
 
+    @GetMapping("/timeOffRequests/pending")
+    public List<TimeOffRequest> allPendingTimeOffRequest(){
+        return timeOffRequestService.listTimeOffRequestPending();
+    }
+
+    @GetMapping("/timeOffRequests/accepted")
+    public List<TimeOffRequest> allAcceptedTimeOffRequest(){
+        return timeOffRequestService.listTimeOffRequestAccepted();
+    }
+    @GetMapping("/timeOffRequests/rejected")
+    public List<TimeOffRequest> allRejectedTimeOffRequest(){
+        return timeOffRequestService.listTimeOffRequestRejected();
+    }
+
     @GetMapping("/timeOffRequests/employee/{id}")
     public List<TimeOffRequest> TimeOffRequestByEmployee(@PathVariable Long id){
         return timeOffRequestService.listTimeOffRequestByEmployee(id);
