@@ -48,7 +48,18 @@ public class ActorsServiceImpl implements ActorsService {
             .collect(Collectors.toList());
     List<Integer> telephoneNumbers = new ArrayList<>();
     List<Status> statusList = Stream.of(Status.ACTIVE,Status.ACTIVE,Status.ACTIVE,Status.INACTIVE).toList();
-    String photoUrl = "https://static.vecteezy.com/system/resources/previews/008/442/086/original/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg";
+    String[] photoUrlMen = {
+            "https://img.freepik.com/vecteurs-premium/profil-personnage-dessin-anime-avatar-homme-affaires_18591-50585.jpg?w=2000",
+            "https://static.vecteezy.com/system/resources/previews/008/442/086/original/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg",
+            "https://img.freepik.com/vecteurs-premium/profil-homme-barbe_18591-41573.jpg",
+            "https://img.freepik.com/premium-vector/young-arab-hispanic-man-with-beard-glasses-wearing-suit-tie-face-icon-portrait_768258-1499.jpg"
+    };
+    String[] photoUrlWomen = {
+            "https://static.vecteezy.com/system/resources/previews/008/442/086/original/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg",
+            "https://us.123rf.com/450wm/jemastock/jemastock1712/jemastock171212584/92283187-belle-femme-profil-dessin-anim%C3%A9-ic%C3%B4ne-vector-illustration-graphisme.jpg?ver=6",
+            "https://st3.depositphotos.com/6697918/15699/v/600/depositphotos_156995416-stock-illustration-beautiful-face-of-arabic-muslim.jpg",
+            "https://static.vecteezy.com/system/resources/previews/022/730/602/original/avatar-of-business-working-woman-in-formal-suit-flat-illustration-drawing-asian-girl-icon-avatar-generative-ai-cartoon-style-free-photo.jpg"
+    };
     List<Long>departmentID = Stream.of(1L,2L,3L,4L,5L,6L,8L,9L,10L,11L,12L,13L).toList();
     List<Long>jobID = Stream.of(1L,2L,3L,4L,5L,6L,7L,8L,9L,10L,11L,12L,13L,14L,15L,16L,17L,18L,19L,20L).toList();
 
@@ -84,7 +95,10 @@ public class ActorsServiceImpl implements ActorsService {
             employee.setEmail(employee.getFirstName()+new Random().nextInt(10,2000)+"@gmail.com");
             employee.setHiringDate(employee.getBirthday().plusYears(new Random().nextInt(20,25)));
             employee.setStatus(statusList.get(new Random().nextInt(statusList.size())));
-            employee.setPhotoUrl(photoUrl);
+            if(employee.getGender().equals(Gender.MALE))
+                employee.setPhotoUrl(photoUrlMen[new Random().nextInt(4)]);
+            else
+                employee.setPhotoUrl(photoUrlWomen[new Random().nextInt(4)]);
             employee.setDepartmentID(10L); //departmentRH
             employee.setJobID(15L);//rh job
             humanResourceManagerRepository.save(rh);
@@ -118,8 +132,10 @@ public class ActorsServiceImpl implements ActorsService {
             employee.setEmail(employee.getFirstName()+new Random().nextInt(10,2000)+"@gmail.com");
             employee.setHiringDate(employee.getBirthday().plusYears(new Random().nextInt(20,25)));
             employee.setStatus(statusList.get(new Random().nextInt(statusList.size())));
-            employee.setPhotoUrl(photoUrl);
-            employee.setDepartmentID(departmentID.stream().filter(elt-> elt != 10L).toList().get(new Random().nextInt(departmentID.size()-1)));
+            if(employee.getGender().equals(Gender.MALE))
+                employee.setPhotoUrl(photoUrlMen[new Random().nextInt(4)]);
+            else
+                employee.setPhotoUrl(photoUrlWomen[new Random().nextInt(4)]);            employee.setDepartmentID(departmentID.stream().filter(elt-> elt != 10L).toList().get(new Random().nextInt(departmentID.size()-1)));
             employee.setJobID(jobID.stream().filter(elt-> elt != 15L).toList().get(new Random().nextInt(jobID.size()-1))); //exclusion rh
             employeeRepository.save(employee);
             managerRepository.save(manager);
@@ -149,8 +165,10 @@ public class ActorsServiceImpl implements ActorsService {
             employee.setEmail(employee.getFirstName()+new Random().nextInt(10,2000)+"@gmail.com");
             employee.setHiringDate(employee.getBirthday().plusYears(new Random().nextInt(20,25)));
             employee.setStatus(statusList.get(new Random().nextInt(statusList.size())));
-            employee.setPhotoUrl(photoUrl);
-            employee.setDepartmentID(departmentID.stream().filter(elt-> elt != 10L).toList().get(new Random().nextInt(departmentID.size()-1)));
+            if(employee.getGender().equals(Gender.MALE))
+                employee.setPhotoUrl(photoUrlMen[new Random().nextInt(4)]);
+            else
+                employee.setPhotoUrl(photoUrlWomen[new Random().nextInt(4)]);            employee.setDepartmentID(departmentID.stream().filter(elt-> elt != 10L).toList().get(new Random().nextInt(departmentID.size()-1)));
             employee.setJobID(jobID.stream().filter(elt-> elt != 15L).toList().get(new Random().nextInt(jobID.size()-1))); //exclusion rh
             while (employee.getJobID().equals(15L))//rh
                 employee.setJobID(jobID.get(new Random().nextInt(jobID.size())));
